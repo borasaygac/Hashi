@@ -1,6 +1,6 @@
 # Group K-Sat Solving
 
-Gitlab address for DIMACS format python package : https://github.com/mxklabs/mxklabs-python
+Gitlab address for DIMACS format python package : https://github.com/mxklabs/mxklabs-python, https://pypi.org/project/cnfc/
 
 ## Getting started
 
