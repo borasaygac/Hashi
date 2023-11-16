@@ -9,7 +9,7 @@ Some thoughts:
 4. cancel out multiple bridge in the same direction ->SOLVED
 
 Approach for candidate set generation:
-Before building degree constraint we iterate over all draws of size 1 <= k <= 8 for a size 8 set that symbolizes all            possibilities [n[i-1][j].v1,  n[i-1][j].v2, n[i+1][j].v1, n[i+1][j].v2, n[i][j-1].h1, n[i][j-1].h2, n[i][j+1].h1,  n[i][j+1].h2].
+Before building degree constraint we iterate over all draws of size 1 <= k <= 4 (only a maximum of variables can be true at once) for a size 8 set that symbolizes all            possibilities [n[i-1][j].v1,  n[i-1][j].v2, n[i+1][j].v1, n[i+1][j].v2, n[i][j-1].h1, n[i][j-1].h2, n[i][j+1].h1,  n[i][j+1].h2].
 
 This way, i.e. for k = 3 we receive permutations of the form (0,1,2), (0,1,3) ... , (6,7,8). We then iterate over every generated tuple and count the bridges created by the permutation (for this, we can i mod 2) and then add the tuple to a map MAP that groups by count.
 
