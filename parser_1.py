@@ -94,29 +94,6 @@ def constraints(field, island_location):
                     f.extend([[-n[i][j].h1, n[i][j-1].h1], [-n[i][j].h2, n[i][j-1].h2]])                    
                 if (j < len(field) - 1):
                     f.extend([[-n[i][j].h1, n[i][j+1].h1], [-n[i][j].h2, n[i][j+1].h2]]) 
-            else:
-                dnf = CNF()
-                cand = [n[i][j+1].h1, n[i][j-1].h1, n[i+1][j+1].v1, n[i-1][j].v1]
-                if (i == 0):
-                   cand.remove(n[i-1][j].v1)
-                if (i >= len(field) - 1):
-                   cand.remove(n[i+1][j].v1)
-                if (j == 0):
-                   cand.remove(n[i][j-1].h1)               
-                if (j >= len(field) - 1):
-                   cand.remove(n[i][j+1].h1)
-                   
-                draws = combinations(list(range(0, len(cand))), n[i][j].val)
-                sets_from_draws = [set(draw) for draw in draws]
-                f.extend()
-                for s in sets_from_draws:
-                    cnf = []
-                    for i in range(0, 4):
-                        if(i not in s):
-                            cnf.append(-cand[i])
-                        else:
-                            cnf.append(cand[i]) 
-                    dnf.append(cnf)
     sol = []
     #f.extend([[n[0][5].v1, n[0][5].h1]])
     with Solver(bootstrap_with=f) as s:
@@ -143,7 +120,7 @@ def constraints(field, island_location):
                 else:
                     file.write('0')
             j += 1    
-            if (i + 4) % sqrt(len(sol) / 4) == 0:
+            if (((i // 4) + 1) % len(n[0])) == 0:
                 file.write('\n')
                 j = 0 
             else:
