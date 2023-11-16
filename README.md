@@ -4,6 +4,10 @@ Some thoughts:
 
 1. We need to encode one further constraint to prevent unwarranted bridge building. For this, we need 4 further variables obtainable during traversal of the field: We collect the Nodes grouped by horizontal index j in map H and Nodes grouped by vertical index i in map V. Then during traversal of nodes array, we set the variables respectively by accessing the maps.
 
+2. generate candidate set
+3. satisfying island value
+4. cancel out multiple bridge in the same direction ->SOLVED
+
 
 (Maybe we need to agree on a formatting option, since Python execution heavily relies on indentation etc.)
 
