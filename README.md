@@ -2,8 +2,8 @@
 
 Some thoughts: 
 
-1. The connectivity constraint is not defined properly. We exclude edge islands from being transferred hor. and vert. regardless of their position. This is incorrect (i.e. upper border islands can be traversed hor.)
-2. Setting the ver. and hor. booleans of island nodes to **true**, while we are building the formula, yields incorret behaviour, since Sympy does not replace the possibly added island variables by **true** in the whole formula. Instead, we need to rely on the initialization of the **Node** array beforehand and then presumably work with the **Node** class for the formula building. 
+1. We need to encode one further constraint to prevent unwarranted bridge building. For this, we need 4 further variables obtainable during traversal of the field: We collect the Nodes grouped by horizontal index j in map H and Nodes grouped by vertical index i in map V. Then during traversal of nodes array, we set the variables respectively by accessing the maps.
+
 
 (Maybe we need to agree on a formatting option, since Python execution heavily relies on indentation etc.)
 
