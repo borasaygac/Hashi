@@ -19,7 +19,7 @@ for r in range(1, 5):  # We're interested in lengths 1 to 4
                 subsequent_pair = True
             else:
                 s.add(num)
-        if (count_hor > 2) | (count_ver > 2) | (subsequent_pair):
+        if (count_hor > 2) | (count_ver > 2) | (subsequent_pair): # prevent subsequent pairs and more than 3 bridges built along the same axis 
             continue
         
         total = sum(2 if x % 2 == 0 else 1 for x in comb)
