@@ -87,14 +87,14 @@ def build_constraints(field):
                     f.extend([[-n[i][j].h1, n[i][j-1].h1], [-n[i][j].h2, n[i][j-1].h2]])                    
                 if (j < len(field) - 1):
                     f.extend([[-n[i][j].h1, n[i][j+1].h1], [-n[i][j].h2, n[i][j+1].h2]]) 
-    sol = []
+    model = []
     #f.extend([[n[0][5].v1, n[0][5].h1]])
     with Solver(bootstrap_with=f) as s:
         s.solve()
         print("\nModel:")
-        sol = s.get_model()
+        model = s.get_model()
     
-    res = list(map(lambda x: vpool.obj(x) if x > 0 else '~'+ vpool.obj(-x), sol))
+    res = list(map(lambda x: vpool.obj(x) if x > 0 else '~'+ vpool.obj(-x), model))
     print(res)  
     output_folder = os.path.join(os.getcwd(), 'Solution')
     if not os.path.exists(output_folder):
@@ -102,11 +102,13 @@ def build_constraints(field):
     output_path = os.path.join(output_folder, f'sol{num}.txt')
     with open(output_path, 'w') as file:
         j = 0
-        for i in range(0, len(sol), 4):
-            if n[(i // 4) // len(n[0])][j].val != 0:
-                file.write(f'{n[(i // 4) // len(n[0])][j].val}')
+        I = lambda i: (i // 4) // len(n[0])
+        
+        for i in range(0, len(model), 4):
+            if n[I(i)][j].val != 0:
+                file.write(f'{n[I(i)][j].val}')
             else:
-                chunk = sol[i:i+4]
+                chunk = model[i:i+4]
                     
                 if any(elem > 0 for elem in chunk):
                     file.write('b')
