@@ -6,6 +6,7 @@ from sympy import *
 from pysat.formula import CNF, IDPool
 from pysat.solvers import Solver
 from itertools import combinations
+import aiger
 
 # This file is for parsing the input files
 num = 1
@@ -71,7 +72,7 @@ def build_constraints(field):
                 n[i][j] = Node(field[i][j], v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
                 f.extend([[n[i][j].h1],[n[i][j].v1],[n[i][j].h2],[n[i][j].v2] ])
                 
-
+    a = [[Node(0, Atom(n[x][y].h1), Atom(n[x][y].h2), Atom(n[x][y].v1), Atom(n[x][y].v2)) for y in range(len(field[0]))] for x in range(len(field))]
     
     for i in range(0, len(field)):
         for j in range(0, len(field[0])):
