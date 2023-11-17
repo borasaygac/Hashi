@@ -16,7 +16,7 @@ for r in range(1, 5):  # We're interested in lengths 1 to 4
                 count_odd += 1
                 total += 1
 
-        if count_even > 2 || count_odd > 2:
+        if count_even > 2 | count_odd > 2:
             continue;
 
         if total not in bridge_sum:
