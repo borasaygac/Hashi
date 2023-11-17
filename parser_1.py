@@ -88,7 +88,7 @@ def build_constraints(field):
                 if (j < len(field) - 1):
                     f.extend([[-n[i][j].h1, n[i][j+1].h1], [-n[i][j].h2, n[i][j+1].h2]]) 
     model = []
-    #f.extend([[n[0][5].v1, n[0][5].h1]])
+    f.extend([[n[4][1].h1]])
     with Solver(bootstrap_with=f) as s:
         s.solve()
         print("\nModel:")
@@ -106,14 +106,17 @@ def build_constraints(field):
         
         for i in range(0, len(model), 4):
             if n[I(i)][j].val != 0:
-                file.write(f'{n[I(i)][j].val}')
+                file.write(f'{n[I(i)][j].val} ')
             else:
                 chunk = model[i:i+4]
-                    
-                if any(elem > 0 for elem in chunk):
-                    file.write('b')
-                else:
-                    file.write('0')
+                
+                toWrite = '0 '
+                for c in chunk:
+                    if c > 0:
+                        print(c)
+                        toWrite = f'b{((c+1) % 2)+1}' 
+                file.write(toWrite)
+                
             j += 1    
             if (((i // 4) + 1) % len(n[0])) == 0:
                 file.write('\n')
