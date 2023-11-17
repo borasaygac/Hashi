@@ -5,19 +5,18 @@ bridge_sum = {}
 
 for r in range(1, 5):  # We're interested in lengths 1 to 4
     for perm in combinations(arr, r):
-        count_even = 0  # Counter for even numbers
-        count_odd = 0
+        count_hor = 0  # Counter for even numbers
+        count_ver = 0
         total = 0
         for num in perm:
-            if num % 2 == 0:
-                count_even += 1
-                total += 2 
+            if num <= 3:
+                count_ver += 1
             else:
-                count_odd += 1
-                total += 1
-
-        if count_even > 2 | count_odd > 2:
+                count_hor += 1
+        if count_hor > 2 | count_ver > 2:
             continue
+        
+        total = sum(2 if x % 2 == 0 else 1 for x in perm)
 
         if total not in bridge_sum:
              bridge_sum[total] = []
