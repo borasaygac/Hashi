@@ -5,7 +5,7 @@ trans = ['A', 'B', 'C', 'D', 'E', 'K', 'G', 'H']
 bridge_sum = {}
 #[ n[i-1][j].v2, n[i-1][j].v1,n[i+1][j].v2, n[i+1][j].v1, n[i][j-1].h2, n[i][j-1].h1, n[i][j+1].h2, n[i][j+1].h1]
 
-#        |
+#         |
 #    --Island--
 #        |
 for r in range(1, 5):  # We're interested in lengths 1 to 4
