@@ -10,6 +10,8 @@ def initialise_field(x_size, y_size, contents):
                 initialised_field[i][j] = int(contents[i][j])
             else:
                 initialised_field[i][j] = contents[i][j]
+                #V[1..n] = ..
+                #H[1::m] = ..
 
     for row in initialised_field:  # Prints the 2d initialised_field for internal purposes. DELETE LATER.
         for element in row:

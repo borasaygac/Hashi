@@ -3,7 +3,11 @@ from itertools import combinations
 arr = [0, 1, 2, 3, 4, 5, 6, 7]
 trans = ['A', 'B', 'C', 'D', 'E', 'K', 'G', 'H']
 bridge_sum = {}
+#[ n[i-1][j].v2, n[i-1][j].v1,n[i+1][j].v2, n[i+1][j].v1, n[i][j-1].h2, n[i][j-1].h1, n[i][j+1].h2, n[i][j+1].h1]
 
+#        |
+#    --Island--
+#        |
 for r in range(1, 5):  # We're interested in lengths 1 to 4
     for comb in combinations(arr, r):
         s = set()
@@ -38,3 +42,6 @@ for i in range(1,9):
         print(*tup, sep=" & ", end=' ')
         print(') | ', end=' ')
     print()
+    
+    #node.val = 3 => bridge_sum[3] = [[],[], ]
+    #node.val = 3 => -[0] and -[1] and ... except 3 and -[8] Not(DNF) And Not(DNF) == CNF

@@ -17,6 +17,7 @@ def print_to_txt(n, model, num):
         for i in range(0, len(model), 4):
             if n[I(i)][j].val != 0:
                 file.write(f'{n[I(i)][j].val}  ')
+                print(f'{n[I(i)][j].val}  ' , end=' ')
             else:
                 chunk = model[i:i + 4]
 
@@ -25,10 +26,13 @@ def print_to_txt(n, model, num):
                     if c > 0:
                         to_write = chr(104 + ((c - i) // 3) * 14) + f"b{((c + 1) % 2) + 1}"
                 file.write(to_write)
+                print(to_write, end=' ')
 
             j += 1
             if (((i // 4) + 1) % len(n[0])) == 0:
                 file.write('\n')
+                print('\n')
                 j = 0
             else:
                 file.write('  ')
+                print('  ', end=' ')
