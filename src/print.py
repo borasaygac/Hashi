@@ -6,7 +6,11 @@ def print_to_txt(n, model, num):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, f'sol{num}.txt')
+        
     with open(output_path, 'w') as file:
+        if model is None:
+            file.write("No model!")
+            return
         j = 0
         I = lambda i: (i // 4) // len(n[0])
 

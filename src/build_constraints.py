@@ -59,17 +59,12 @@ def build_constraints(field):
         for i in range(0, len(field)):
             for j in range(0, len(field[0])):
                 if n[i][j].val == 0:
-                    # For all Nodes in a field of size i * j:
-                    # IF the node is NOT an island -> then extend f with the following formula:
-                    # (NOT h1_x_y OR NOT v1_x_y) AND (NOT h2_x_y OR NOT v2_x_y) AND
-                    # (NOT h1_x_Y OR NOT v2_x_y) AND (NOT h2_x_y OR NOT v1_x_y)
-                    # This means that we're checking for vertical and horizontal bridges occurring at the same time
-                    # and ensuring they don't. Permutations are considered.
+                    # no cross: only one type of bridge on none island nodes
                     f.extend([[-n[i][j].h1, -n[i][j].v1], [-n[i][j].h2, -n[i][j].v2],
-                              [-n[i][j].h1, -n[i][j].v2], [-n[i][j].h2, -n[i][j].v1]]
-                             )
-                    # These are checks based on location that ensure the bridges
-                    # carry on only in one direction.
+                              [-n[i][j].h1, -n[i][j].v2], [-n[i][j].h2, -n[i][j].v1],
+                              [-n[i][j].h1, -n[i][j].h2], [-n[i][j].v1, -n[i][j].v2]
+                             ])
+                    # continuity: bridges extend from an island node to an island node  
                     if i >= 1:
                         f.extend([[-n[i][j].v1, n[i - 1][j].v1], [-n[i][j].v2, n[i - 1][j].v2]])
                     if i < len(field) - 1:
@@ -80,7 +75,7 @@ def build_constraints(field):
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
 
     bridge_only_in_one_direction()
-
+    # f.extend([[n[4][1].h1], [n[4][3].h2]])
     return n, vpool, f # TODO: this seems too specific, should we delete it?
 
     # with Solver(bootstrap_with=f) as s:
