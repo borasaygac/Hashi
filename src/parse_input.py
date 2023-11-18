@@ -7,7 +7,7 @@ def parse_input_field(input_no):
     # Opens the file, reads everything. Prints a list. Since the first two numbers always indicate
     # x and y size, sets these manually. Creates a list with all the islands, their locations and
     # the number of bridges.
-    folder = os.path.join(os.getcwd(), 'Project_1')
+    folder = os.path.join(os.getcwd(), 'project_1')
     file = f'{folder}/test{input_no}.txt'  # Parametrized input file selection
     contents = []  # Initializes contents of the field as a list
 
