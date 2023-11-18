@@ -1,5 +1,5 @@
 # This file is for parsing the input files
-
+import os
 def parse_input_field(input_no):
     # Gets game field from input .txt file and sets the size of the game.
     # References global num in the main.
@@ -7,8 +7,8 @@ def parse_input_field(input_no):
     # Opens the file, reads everything. Prints a list. Since the first two numbers always indicate
     # x and y size, sets these manually. Creates a list with all the islands, their locations and
     # the number of bridges.
-
-    file = f'C:/Users/lutfu/Documents/group-k-sat-solving/Project_1/test{input_no}.txt'  # Parametrized input file selection
+    folder = os.path.join(os.getcwd(), 'Project_1')
+    file = f'{folder}/test{input_no}.txt'  # Parametrized input file selection
     contents = []  # Initializes contents of the field as a list
 
     with open(file) as t:
