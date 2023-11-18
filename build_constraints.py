@@ -2,6 +2,8 @@ import sympy
 from pysat.formula import CNF, IDPool
 from pysat.solvers import Solver
 
+from solve import solve_function
+
 
 def build_constraints(field):
     # Create a class named Node representing each x and y value on the field.
@@ -81,19 +83,11 @@ def build_constraints(field):
 
     f.extend([[n[3][2].h2]])  # TODO: this seems too specific, should we delete it?
 
-    def solve_function():
-        # This function takes the formula f as input and tries to solve
-        with Solver(bootstrap_with=f) as s:
-            s.solve()
-            print("\nModel:")
-            model_tmp = s.get_model()
-            model = model_tmp
-
-        res = list(map(lambda x: vpool.obj(x) if x > 0 else '~' + vpool.obj(-x), model_tmp))
-        print(res)
-
-        return model
-
-    model = solve_function()
+    # with Solver(bootstrap_with=f) as s:
+    #         s.solve()
+    #         print("\nModel:")
+    #         for m in s.enum_models():
+    #             print(m)
+    model = solve_function(vpool, f)
 
     return n, model

@@ -1,9 +1,7 @@
 import os
 
-from parse_input_field import num
 
-
-def print_to_txt(n, model):
+def print_to_txt(n, model, num):
     output_folder = os.path.join(os.getcwd(), 'Solution')
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)

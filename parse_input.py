@@ -1,11 +1,5 @@
 # This file is for parsing the input files
 
-num = 21
-
-# Global variable for deciding which text file to use, if they are from the given set by,
-# the tutorial management.
-
-
 def parse_input_field(input_no):
     # Gets game field from input .txt file and sets the size of the game.
     # References global num in the main.
