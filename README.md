@@ -1,6 +1,29 @@
 # Group K-Sat Solving
 
+Some thoughts: 
+
+1. We need to encode one further constraint to prevent unwarranted bridge building. For this, we need 4 further variables obtainable during traversal of the field: We collect the Nodes grouped by horizontal index j in map H and Nodes grouped by vertical index i in map V. Then during traversal of nodes array, we set the variables respectively by accessing the maps.
+
+2. generate candidate set
+3. satisfying island value
+4. cancel out multiple bridge in the same direction ->SOLVED
+
+Approach for candidate set generation:
+Before building degree constraint we iterate over all draws of size 1 <= k <= 4 (only a maximum of 4 variables can be true at once) for a size 8 set that symbolizes all            possibilities [ n[i-1][j].v2, n[i-1][j].v1,n[i+1][j].v2, n[i+1][j].v1, n[i][j-1].h2, n[i][j-1].h1, n[i][j+1].h2, n[i][j+1].h1].
+
+This way, i.e. for k = 3 we receive permutations of the form (0,1,2), (0,1,3) ... , (6,7,8). We then iterate over every generated tuple and count the bridges created by the permutation (for this, we can i mod 2) and then add the tuple to a map MAP that groups by count.
+
+Then, during degree constraint generation, we only loop trough the clauses returned by mapping of MAP(node.val). This way, we build a DNF of clauses that all satisfy the degree constraint. In the end we extend the generated DNF by appending unit clauses from the neighbour set.
+
+(Maybe we need to agree on a formatting option, since Python execution heavily relies on indentation etc.)
+
+
 Gitlab address for DIMACS format python package : https://github.com/sympy/sympy, https://pypi.org/project/cnfc/
+
+Notes from tutorial: 09.11.23
+- It would make sense to test for generation of grids, to go over 50 to test for efficiency.
+
+Sudoku web page for CNF : https://users.aalto.fi/~tjunttil/2022-DP-AUT/notes-sat/solving.html
 
 ## Getting started
 
