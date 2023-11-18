@@ -2,7 +2,7 @@ import sympy
 from pysat.formula import CNF, IDPool
 from pysat.solvers import Solver
 
-from solve import solve_function
+from solve import solve
 
 
 def build_constraints(field):
@@ -81,13 +81,10 @@ def build_constraints(field):
 
     bridge_only_in_one_direction()
 
-    f.extend([[n[3][2].h2]])  # TODO: this seems too specific, should we delete it?
+    return n, vpool, f # TODO: this seems too specific, should we delete it?
 
     # with Solver(bootstrap_with=f) as s:
     #         s.solve()
     #         print("\nModel:")
     #         for m in s.enum_models():
     #             print(m)
-    model = solve_function(vpool, f)
-
-    return n, model

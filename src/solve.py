@@ -1,7 +1,7 @@
 from pysat.formula import CNF, IDPool
 from pysat.solvers import Solver
 
-def solve_function(vpool, f):
+def solve(vpool, f):
     # This function takes the formula f as input and tries to solve
     with Solver(bootstrap_with=f) as s:
         s.solve()

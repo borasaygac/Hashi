@@ -8,7 +8,7 @@ def parse_input_field(input_no):
     # x and y size, sets these manually. Creates a list with all the islands, their locations and
     # the number of bridges.
 
-    file = f'Project_1/test{input_no}.txt'  # Parametrized input file selection
+    file = f'C:/Users/lutfu/Documents/group-k-sat-solving/Project_1/test{input_no}.txt'  # Parametrized input file selection
     contents = []  # Initializes contents of the field as a list
 
     with open(file) as t:
