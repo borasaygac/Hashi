@@ -57,7 +57,7 @@ def build_constraints(field):
                         f.extend([[-n[i][j].h1, n[i][j - 1].h1], [-n[i][j].h2, n[i][j - 1].h2]])
                     if j < len(field) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
-                else:
+                #else:
                     # print(f"THIS IS I,J {i} {j}")
                     # # start_and_end: bridges need to start from and end at islands
                     # f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
