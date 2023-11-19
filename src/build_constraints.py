@@ -1,6 +1,6 @@
 import sympy
 from pysat.formula import CNF, IDPool
-from assets import *
+from assets.bridge_sum import bridge
 import math
 
 
@@ -22,7 +22,7 @@ def build_constraints(field):
             self.v2 = vertical_bridge2
 
     f = CNF()
-    n = [[Node(0) for x in range(len(field[0]))] for y in range(len(field))]
+    n = [[Node(0) for _ in range(len(field[0]))] for _ in range(len(field))]
     # variable pool for formula
     vpool = IDPool()
     v = lambda i: vpool.id('{0}'.format(i)) 
@@ -38,7 +38,21 @@ def build_constraints(field):
     # TODO: Check later whether we need this or not
     # a = [[Node(0, Atom(n[x][y].h1), Atom(n[x][y].h2), Atom(n[x][y].v1), Atom(n[x][y].v2)) for y in range(len(field[0]))]
     #      for x in range(len(field))]
+                
     
+    def map_literal(i,j, lit, mapping):
+        # prevent out of bounds
+        if (
+        ((lit == 1 or lit == 2) and i <= 0) 
+        or (lit == 3 or lit == 4) and i >= len(n) 
+        or (lit == 3 or lit == 4) and i < len(n) 
+        or (lit == 5 or lit == 6) and j > 0 
+        or (lit == 7 or lit == 8) and j < len(n[0])
+        ):
+            return False
+        
+        return mapping[lit]    
+        
     def build_constraints():
         for i in range(0, len(field)):
             for j in range(0, len(field[0])):
@@ -58,15 +72,16 @@ def build_constraints(field):
                     if j < len(field) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
                 else:
+                    print(n[-1][0].h1)
                     print(f"THIS IS I,J {i} {j}")
                     # start_and_end: bridges need to start from and end at islands
                     f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
                     
                     # degree: bridges built by an island must be equal to its node val
-                    clauses = bridge_sum[n[i][j].val]
+                    clauses = bridge[n[i][j].val]
                     
                     # Since the clauses carry index integers, we need to map them to their corresponding value
-                    map_literal = {
+                    mapping = {
                             1: n[i-1][j].v1,
                             2: n[i-1][j].v2,
                             3: n[i+1][j].v1,
@@ -76,7 +91,8 @@ def build_constraints(field):
                             7: n[i][j+1].h1,
                             8: n[i][j+1].h2
                     }
-                    mapped_clauses = [[int(math.copysign(1, var))*map_literal[abs(var)] for var in clause] for clause in clauses]
+                    mapped_clauses = [[int(math.copysign(1, var))*mapped for var in clause if ((mapped := map_literal(i, j, abs(var), mapping)) != False)] for clause in clauses]
+                    
                     print(list(map(lambda x: vpool.obj(x) if x > 0 else '~' + vpool.obj(-x), mapped_clauses[0])))
                     f.extend(mapped_clauses)
                     
