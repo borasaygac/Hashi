@@ -9,7 +9,7 @@ from itertools import combinations
 arr = [1, 2, 3, 4, 5, 6, 7, 8]
 bridge_sum_DNF = {}
 
-for r in range(1, 5):  # We're interested in lengths 1 to 4
+for r in range(0, 5):  # We're interested in lengths 1 to 4
     for comb in combinations(arr, r):
         s = set()
         subsequent_pair = False
@@ -37,7 +37,7 @@ for r in range(1, 5):  # We're interested in lengths 1 to 4
              bridge_sum_DNF[total] = []
         bridge_sum_DNF[total].append(list(toAdd))
         
-for i in range(1,9):
+for i in range(0,9):
     print(f"bridge_sum_DNF[{i}]=[", end=' ')
     for clause in bridge_sum_DNF[i]:
         print('[', end=' ')
@@ -65,7 +65,7 @@ for key, array in bridge_sum_DNF.items():
 
 # Display the updated dictionary
 
-for i in range(1,9):
+for i in range(0,9):
     print(f"bridge_sum_CNF[{i}]=[", end=' ')
     for clause in bridge_sum_CNF[i]:
         print('[', end=' ')
