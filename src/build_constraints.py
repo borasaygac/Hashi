@@ -1,20 +1,18 @@
 import sympy
 from pysat.formula import CNF, IDPool
-from assets.bridge_sum import bridge_sum_CNF as bridges
+from assets.bridge_sum import bridge_sum_CNF as bridge_sum
 import math
 
 
 def build_constraints(field):
-    # Create a class named Node representing each x and y value on the field.
+    # Create a class named Node representing holding boolean variables.
     class Node:
         def __init__(self,
-                     bridge_no,  # Number of bridges on a given node [ bridge_no element of (0,8)].
-                     # hb(X) and vb(Y) refer to the horizontal and vertical bridges. Set to true by default.
-                     # The rules of Hashi explain that an island can have at most 2 bridges running in each direction.
-                     horizontal_bridge1=sympy.true,
-                     horizontal_bridge2=sympy.true,
-                     vertical_bridge1=sympy.true,
-                     vertical_bridge2=sympy.true):
+                     bridge_no,
+                     horizontal_bridge1=None,
+                     horizontal_bridge2=None,
+                     vertical_bridge1=None,
+                     vertical_bridge2=None):
             self.val = bridge_no
             self.h1 = horizontal_bridge1
             self.h2 = horizontal_bridge2
@@ -33,12 +31,7 @@ def build_constraints(field):
                     n[i][j] = Node(field[i][j] if field[i][j]!='.' else 0, v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
         return n
 
-    n = initialize_nodes()
-
-    # TODO: Check later whether we need this or not
-    # a = [[Node(0, Atom(n[x][y].h1), Atom(n[x][y].h2), Atom(n[x][y].v1), Atom(n[x][y].v2)) for y in range(len(field[0]))]
-    #      for x in range(len(field))]   
-        
+    n = initialize_nodes()  
     def build_constraints():
         for i in range(0, len(field)):
             for j in range(0, len(field[0])):
@@ -62,7 +55,7 @@ def build_constraints(field):
                     f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
                     
                     # degree: bridges built by an island must be equal to its node val
-                    clauses = bridges[n[i][j].val]
+                    clauses = bridge_sum[n[i][j].val]
                     
                     # Since the clauses carry index integers, we need to map them to their corresponding value
                     mapping = {}
@@ -79,19 +72,19 @@ def build_constraints(field):
                     if j < len(field) - 1:
                         mapping[7] = n[i][j+1].h1
                         mapping[8] = n[i][j+1].h2
-                                        
-                    mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause if abs(literal) in mapping] for clause in clauses]
                     
-                    print(f"Für {i}, {j} mit val {n[i][j].val}")
+                    filtered_clauses = []
+                    for row in clauses:
+                        filtered = list(filter(lambda x: x < 0, row))
+                        if (len(filtered) > 0 and all(abs(el) in mapping for el in filtered)) or len(filtered) ==0:
+                            filtered_clauses.append(row)
+                                   
+                    mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause] for clause in filtered_clauses]
                     res = [[vpool.obj(literal) if literal > 0 else '~' + vpool.obj(-literal) for literal in clause] for clause in mapped_clauses]
-                    print(res)
                     f.extend(mapped_clauses)
-                    
-        
 
     build_constraints()
-    # f.extend([[n[4][1].h1], [n[4][3].h2]])
-    return n, vpool, f # TODO: this seems too specific, should we delete it?
+    return n, vpool, f
 
     # with Solver(bootstrap_with=f) as s:
     #         s.solve()
