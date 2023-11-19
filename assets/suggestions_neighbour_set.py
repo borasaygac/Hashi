@@ -20,44 +20,52 @@ def find_closest_neighbors(position):
     closest_neighbors = []
     print(f"x,y: {x}, {y}")
     # Check right
+    if ( y == len(grid[0])-1 ): 
+        closest_neighbors.append(None)
     for dy in range(1, len(grid[0]) - y):
         neighbor = (x, y + dy)
         if neighbor in neighbours:
             closest_neighbors.append(neighbor)
             break
         else:
-            if (dy == (len(grid[0]) - y - 1)) | (y == (len(grid[0]) - 1)):
+            if dy == len(grid[0]) - y - 1:
                 closest_neighbors.append(None)
     
     # Check left
+    if (y == 0): 
+        closest_neighbors.append(None)
     for dy in range(1, y + 1):
         neighbor = (x, y - dy)
         if neighbor in neighbours:
             closest_neighbors.append(neighbor)
             break
         else:
-            if (dy == y) | (y == 0):
+            if (dy == y):
                 closest_neighbors.append(None)
     
     # Check down
+    if ( x == len(grid)-1 ): 
+        closest_neighbors.append(None)
     for dx in range(1, len(grid) - x):
         neighbor = (x + dx, y)
         if neighbor in neighbours:
             closest_neighbors.append(neighbor)
             break
         else:
-            if (dx == (len(grid) - x - 1)) | (x == (len(grid) - 1)) :
+            if dx == len(grid) - x - 1 :
                 closest_neighbors.append(None)
         
     
     # Check up
+    if ( x == 0 ): 
+        closest_neighbors.append(None) 
     for dx in range(1, x + 1):
         neighbor = (x - dx, y)
         if neighbor in neighbours:
             closest_neighbors.append(neighbor)
             break
         else:
-            if (dx == x) | ( x == 0 ):
+            if (dx == x):
                 closest_neighbors.append(None)    
     
     return closest_neighbors  # Return a maximum of 4 closest neighbors
