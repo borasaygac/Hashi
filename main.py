@@ -1,8 +1,8 @@
-from parse_input import parse_input_field
-from initialize_field import initialise_field
-from build_constraints import build_constraints
-from print import print_to_txt
-from solve import solve
+from src.parse_input import parse_input_field
+from src.initialize_field import initialise_field
+from src.build_constraints import build_constraints
+from src.print import print_to_txt
+from src.solve import solve
 import sys
 
 # Global variable for deciding which text file to use, if they are from the given set by,
