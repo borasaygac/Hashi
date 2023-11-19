@@ -47,21 +47,24 @@ for i in range(0,9):
     
     # Example dictionary of 2D arrays
 
-# Step 1: Merge all lists from the dictionary values into one big list B
-bridge_sum_merged = []
-for array in bridge_sum_DNF.values():
-    for sublist in array:
-        bridge_sum_merged.append(sublist)
 bridge_sum_CNF = {}
 
 def invert(sublist):
     return [-el for el in sublist]
     
 # Step 2: Iterate over the dictionary and filter B based on dict[i]
-for key, array in bridge_sum_DNF.items():
-    filtered_sublists = [sublist for sublist in bridge_sum_merged if sublist not in array]
-    filtered_sublists = [invert(sublist) for sublist in filtered_sublists]
-    bridge_sum_CNF[key] = filtered_sublists  # Replace dict[i] with filtered sublists
+for key, clauses in bridge_sum_DNF.items():
+    filtered_sublists = []
+    for clause in clauses:
+        filtered_sublists.append(invert(clause))
+    bridge_sum_DNF[key] = filtered_sublists  # Replace dict[i] with filtered sublists
+
+for key1 in bridge_sum_DNF.keys():
+    for key2, clauses in bridge_sum_DNF.items():
+        if(key1 != key2):
+            if key1 not in bridge_sum_CNF:
+                bridge_sum_CNF[key1] = []
+            bridge_sum_CNF[key1].extend(clauses)
 
 # Display the updated dictionary
 

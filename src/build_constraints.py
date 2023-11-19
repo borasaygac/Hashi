@@ -82,9 +82,9 @@ def build_constraints(field):
                                         
                     mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause if abs(literal) in mapping] for clause in clauses]
                     
-                    for clause in mapped_clauses:
-                        print(f"{[vpool.obj(literal) if literal > 0 else '~' + vpool.obj(-literal) for literal in clause]}", end=', ')
-                        
+                    print(f"Für {i}, {j} mit val {n[i][j].val}")
+                    res = [[vpool.obj(literal) if literal > 0 else '~' + vpool.obj(-literal) for literal in clause] for clause in mapped_clauses]
+                    print(res)
                     f.extend(mapped_clauses)
                     
         
