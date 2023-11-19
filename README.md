@@ -1,19 +1,6 @@
 # Group K-Sat Solving
 
-Some thoughts: 
-
-1. The connectivity constraint is not defined properly. We exclude edge islands from being transferred hor. and vert. regardless of their position. This is incorrect (i.e. upper border islands can be traversed hor.)
-2. Setting the ver. and hor. booleans of island nodes to **true**, while we are building the formula, yields incorret behaviour, since Sympy does not replace the possibly added island variables by **true** in the whole formula. Instead, we need to rely on the initialization of the **Node** array beforehand and then presumably work with the **Node** class for the formula building. 
-
-(Maybe we need to agree on a formatting option, since Python execution heavily relies on indentation etc.)
-
-
 Gitlab address for DIMACS format python package : https://github.com/sympy/sympy, https://pypi.org/project/cnfc/
-
-Notes from tutorial: 09.11.23
-- It would make sense to test for generation of grids, to go over 50 to test for efficiency.
-
-Sudoku web page for CNF : https://users.aalto.fi/~tjunttil/2022-DP-AUT/notes-sat/solving.html
 
 ## Getting started
 
