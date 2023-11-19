@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-import parser
+#import parser
 
 rows = []
 for i in range(5):
