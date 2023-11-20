@@ -55,7 +55,7 @@ def build_constraints(field):
                         f.extend([[-n[i][j].v1, n[i + 1][j].v1], [-n[i][j].v2, n[i + 1][j].v2]])
                     if j >= 1:
                         f.extend([[-n[i][j].h1, n[i][j - 1].h1], [-n[i][j].h2, n[i][j - 1].h2]])
-                    if j < len(field) - 1:
+                    if j < len(field[0]) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
                 else:
                     # start_and_end: bridges need to start from and end at islands
@@ -76,19 +76,36 @@ def build_constraints(field):
                     if j >= 1:
                         mapping[5] = n[i][j-1].h1
                         mapping[6] = n[i][j-1].h2  
-                    if j < len(field) - 1:
+                    if j < len(field[0]) - 1:
                         mapping[7] = n[i][j+1].h1
                         mapping[8] = n[i][j+1].h2
-                                        
-                    mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause if abs(literal) in mapping] for clause in clauses]
                     
+                    # filtered_clauses = clauses
+                    # for clause in filtered_clauses:
+                    #     for literal in clause:
+                    #         if literal < 0 and (abs(literal) not in mapping):
+                    #             del clause
+                    condition = lambda row: all(abs(lit) in mapping for lit in row )  # Condition to keep rows with non-negative first element
+                    filtered_clauses = [row for row in clauses if condition(row)]
+                    print(mapping)
                     print(f"Für {i}, {j} mit val {n[i][j].val}")
+                    print(clauses)
+                    print(f"flitered: {filtered_clauses}")
+                                        
+                    mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause] for clause in clauses]
+                    
                     res = [[vpool.obj(literal) if literal > 0 else '~' + vpool.obj(-literal) for literal in clause] for clause in mapped_clauses]
-                    print(res)
                     f.extend(mapped_clauses)
                     
-        
-
+    #  for test 4        
+    # f.extend([[-n[6][0].h1], [-n[6][0].h2], [-n[6][0].v1], [-n[6][0].v2 ]])
+    # f.extend([[-n[3][0].h1], [-n[3][0].h2], [-n[3][0].v1], [-n[3][0].v2 ]])
+    # f.extend([[-n[0][1].h1], [-n[0][1].h2], [-n[0][1].v1], [-n[0][1].v2 ]])
+    # f.extend([[-n[1][0].h1], [-n[1][0].h2], [-n[1][0].v1], [-n[1][0].v2 ]])
+    # f.extend([[-n[7][0].h1], [-n[7][0].h2], [-n[7][0].v1], [-n[7][0].v2 ]])
+    # f.extend([[-n[0][3].h1], [-n[0][3].h2], [-n[0][3].v1], [-n[0][3].v2 ]])
+    # f.extend([[-n[5][8].h1], [-n[5][8].h2], [-n[5][8].v1], [-n[5][8].v2 ]])
+    # f.extend([[-n[0][6].h1], [-n[0][6].h2], [-n[0][6].v1], [-n[0][6].v2 ]])
     build_constraints()
     # f.extend([[n[4][1].h1], [n[4][3].h2]])
     return n, vpool, f # TODO: this seems too specific, should we delete it?
