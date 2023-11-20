@@ -4,7 +4,7 @@ from assets.bridge_sum import bridge_sum_CNF as bridges
 import math
 
 
-def build_constraints(field):
+def build_constraints(field, neighbours):
     # Create a class named Node representing each x and y value on the field.
     class Node:
         def __init__(self,
@@ -30,7 +30,7 @@ def build_constraints(field):
     def initialize_nodes():
         for i in range(0, len(field)):
             for j in range(0, len(field[0])):
-                    n[i][j] = Node(field[i][j] if field[i][j]!='.' else 0, v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
+                    n[i][j] = Node(field[i][j], v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
         return n
 
     n = initialize_nodes()
@@ -58,6 +58,15 @@ def build_constraints(field):
                     if j < len(field[0]) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
                 else:
+                    ##START NEIGHBOUR CONSTRAINT: THE NEIGHBOUR SET RETURNS IN ORDER [right, down, left, up]:
+                    ##FOR CURRENT i,j, look neighbours[(i,j)] to get the nieghbour list. If any of the neighbours is none
+                    ##add the corresponding adjacent fields booleans as negated unit clauses
+                    ##i.e neighbours[(i,j)] = [None, (1, 1), (3, 3), None]
+                    ##access the list four times and check if None, then (i.e. neighbours[(i,j)][0] == None)
+                    ##f.extend([[-n[i][j+1].v1], [-n[i][j+1].v1], [-n[i][j+1].v1], [-n[i][j+1].v1]])
+                    ##...with every neighbour
+                    
+                    
                     # start_and_end: bridges need to start from and end at islands
                     f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
                     
@@ -85,19 +94,15 @@ def build_constraints(field):
                     #     for literal in clause:
                     #         if literal < 0 and (abs(literal) not in mapping):
                     #             del clause
-                    condition = lambda row: all(abs(lit) in mapping for lit in row )  # Condition to keep rows with non-negative first element
-                    filtered_clauses = [row for row in clauses if condition(row)]
-                    print(mapping)
-                    print(f"Für {i}, {j} mit val {n[i][j].val}")
-                    print(clauses)
-                    print(f"flitered: {filtered_clauses}")
+                    # condition = lambda row: all(abs(lit) in mapping for lit in row )  # Condition to keep rows with non-negative first element
+                    # filtered_clauses = [row for row in clauses if condition(row)]
+
                                         
                     mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause] for clause in clauses]
                     
                     res = [[vpool.obj(literal) if literal > 0 else '~' + vpool.obj(-literal) for literal in clause] for clause in mapped_clauses]
                     f.extend(mapped_clauses)
-                    
-    #  for test 4        
+                         
     # f.extend([[-n[6][0].h1], [-n[6][0].h2], [-n[6][0].v1], [-n[6][0].v2 ]])
     # f.extend([[-n[3][0].h1], [-n[3][0].h2], [-n[3][0].v1], [-n[3][0].v2 ]])
     # f.extend([[-n[0][1].h1], [-n[0][1].h2], [-n[0][1].v1], [-n[0][1].v2 ]])

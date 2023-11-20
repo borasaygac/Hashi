@@ -11,7 +11,7 @@ def initialise_field(x_size, y_size, contents):
             if contents[i][j] != '.':
                 initialised_field[i][j] = int(contents[i][j])
             else:
-                initialised_field[i][j] = contents[i][j]
+                initialised_field[i][j] = 0
                 #V[1..n] = ..
                 #H[1::m] = ..
 
@@ -43,18 +43,6 @@ def initialise_field(x_size, y_size, contents):
                 if dy == len(initialised_field[0]) - y - 1:
                     closest_neighbors.append(None)
 
-        # Check left
-        if (y == 0):
-            closest_neighbors.append(None)
-        for dy in range(1, y + 1):
-            neighbor = (x, y - dy)
-            if neighbor in neighbours:
-                closest_neighbors.append(neighbor)
-                break
-            else:
-                if (dy == y):
-                    closest_neighbors.append(None)
-
         # Check down
         if (x == len(initialised_field) - 1):
             closest_neighbors.append(None)
@@ -65,6 +53,18 @@ def initialise_field(x_size, y_size, contents):
                 break
             else:
                 if dx == len(initialised_field) - x - 1:
+                    closest_neighbors.append(None)
+
+        # Check left
+        if (y == 0):
+            closest_neighbors.append(None)
+        for dy in range(1, y + 1):
+            neighbor = (x, y - dy)
+            if neighbor in neighbours:
+                closest_neighbors.append(neighbor)
+                break
+            else:
+                if (dy == y):
                     closest_neighbors.append(None)
 
         # Check up
