@@ -22,7 +22,7 @@ for r in range(0, 5):  # We're interested in lengths 1 to 4
                 count_ver += 1
             else:
                 count_hor += 1
-            if(((num-1) in toAdd) & (num != 4) & (num % 2 == 1)):
+            if(((num-1) in toAdd) & (num != 4) & (num % 2 == 0)):
                 subsequent_pair = True
             else:
                 s.add(num)
@@ -62,6 +62,7 @@ for key, clauses in bridge_sum_DNF.items():
 for key1 in bridge_sum_DNF.keys():
     for key2, clauses in bridge_sum_DNF.items():
         if(key1 != key2):
+            print(f"KEY!: {key1} AND KEY2: {key2}")
             if key1 not in bridge_sum_CNF:
                 bridge_sum_CNF[key1] = []
             bridge_sum_CNF[key1].extend(clauses)
