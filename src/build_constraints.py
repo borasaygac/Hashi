@@ -1,4 +1,3 @@
-import sympy
 from pysat.formula import CNF, IDPool
 from assets.bridge_sum import bridge_sum_CNF as bridges
 import math
@@ -11,19 +10,19 @@ def build_constraints(field, neighbours):
                      bridge_no,  # Number of bridges on a given node [ bridge_no element of (0,8)].
                      # hb(X) and vb(Y) refer to the horizontal and vertical bridges. Set to true by default.
                      # The rules of Hashi explain that an island can have at most 2 bridges running in each direction.
-                     horizontal_bridge1=sympy.true,
-                     horizontal_bridge2=sympy.true,
-                     vertical_bridge1=sympy.true,
-                     vertical_bridge2=sympy.true):
+                     horizontal_bridge1=None,
+                     horizontal_bridge2=None,
+                     vertical_bridge1=None,
+                     vertical_bridge2=None):
             self.val = bridge_no
             self.h1 = horizontal_bridge1
             self.h2 = horizontal_bridge2
             self.v1 = vertical_bridge1
             self.v2 = vertical_bridge2
 
+    # formula f, nodes array n, variable pool vpool
     f = CNF()
     n = [[Node(0) for _ in range(len(field[0]))] for _ in range(len(field))]
-    # variable pool for formula
     vpool = IDPool()
     v = lambda i: vpool.id('{0}'.format(i)) 
 
@@ -34,10 +33,6 @@ def build_constraints(field, neighbours):
         return n
 
     n = initialize_nodes()
-
-    # TODO: Check later whether we need this or not
-    # a = [[Node(0, Atom(n[x][y].h1), Atom(n[x][y].h2), Atom(n[x][y].v1), Atom(n[x][y].v2)) for y in range(len(field[0]))]
-    #      for x in range(len(field))]   
         
     def build_constraints():
         for i in range(1, len(field)-1):

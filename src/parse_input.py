@@ -24,8 +24,6 @@ def parse_input_field(input_no):
         contents.extend(readLines)
         contents.extend([('.' * (y_size+2))])
         print(contents)
-        for line in contents:
-            line.strip()
     return x_size+2, y_size+2, contents
 
 
