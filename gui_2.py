@@ -1,10 +1,11 @@
 import tkinter as tk
+from tkinter import messagebox
 import os
-from main import main
 
 input_no = 1
 rows = []
 cols = []
+entry_grid = []
 
 
 def save_values():
@@ -20,23 +21,26 @@ def save_values():
 
 
 def create_grid(x, y):
-    entry_grid = [[None for _ in range(y)] for _ in range(x)]
+    global entry_grid
+    grid = [[None for _ in range(y)] for _ in range(x)]
     for i in range(0, x):
         for j in range(0, y):
             entry = tk.Entry(root)
             entry.grid(row=i + 3, column=j)
             entry.insert(tk.END, '0')
             cols.append(entry.get())
-            entry_grid[i][j] = entry
+            grid[i][j] = entry
         rows.append(cols)
     txt_button = tk.Button(root,
                            text="Save values and create grid.",
-                           command=lambda: save_x_y_to_txt(entry_grid))
+                           command=lambda: save_x_y_to_txt())
     txt_button.grid(row=x+4, column=0, columnspan=2, rowspan=1)
-    return entry_grid
+    entry_grid = grid
+    return grid
 
 
-def save_x_y_to_txt(entry_grid):
+def save_x_y_to_txt():
+    global entry_grid
     global input_no
     x = int(entry_x.get())
     y = int(entry_y.get())
@@ -63,16 +67,35 @@ def save_x_y_to_txt(entry_grid):
 
 
 def run_solver():
+    global entry_grid
     global input_no
-    main(True, input_no)
-    messagebox = tk.Message(root, text="Ran Solver!")
+    # main(True, input_no)
+    messagebox.showinfo("Ran Solver!", "You've ran the solver. Please check the folder to see the result!")
+    start_again_button = tk.Button(root,
+                                   text="Start over?",
+                                   command=clear)
+    start_again_button.grid(row=int(entry_x.get())+6, column=0, columnspan=2, rowspan=1)
     input_no += 1
+
+
+def clear():
+    for i in range(3, int(entry_x.get())+7):
+        todeletelist = root.grid_slaves(row=i)
+        for elem in todeletelist:
+            elem.destroy()
+
+
+
+
 
 
 root = tk.Tk()
 root.title("Group K")
-root.grid_rowconfigure(0, weight=1)
-root.grid_columnconfigure(0, weight=1)
+width = root.winfo_screenwidth()
+height = root.winfo_screenheight()
+root.geometry("%dx%d" % (width, height))  # Make it fullscreen with the os menu attached.
+root.grid_rowconfigure(0, weight=0)
+root.grid_columnconfigure(0, weight=0)
 
 label_x = tk.Label(root, text="X Value")
 entry_x = tk.Entry(root)
@@ -91,6 +114,3 @@ entry_y.grid(row=1, column=1)
 button.grid(row=2)
 
 root.mainloop()
-
-
-
