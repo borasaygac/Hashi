@@ -21,6 +21,7 @@ def parse_input_field(input_no):
         contents = [('.' * (y_size+2))]
         read = t.readlines()
         readLines = ['.'+ string[:-1] + '.' + string[-1] for string in read]
+        print(readLines)
         contents.extend(readLines)
         contents.extend([('.' * (y_size+2))])
         print(contents)

@@ -58,15 +58,18 @@ def build_constraints(field, neighbours):
                     if j < len(field[0]) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
                 else:
-                    ##START NEIGHBOUR CONSTRAINT: THE NEIGHBOUR SET RETURNS IN ORDER [right, down, left, up]:
-                    ##FOR CURRENT i,j, look neighbours[(i,j)] to get the nieghbour list. If any of the neighbours is none
-                    ##add the corresponding adjacent fields booleans as negated unit clauses
-                    ##i.e neighbours[(i,j)] = [None, (1, 1), (3, 3), None]
-                    ##access the list four times and check if None, then (i.e. neighbours[(i,j)][0] == None)
-                    ##f.extend([[-n[i][j+1].v1], [-n[i][j+1].v1], [-n[i][j+1].v1], [-n[i][j+1].v1]])
-                    ##...with every neighbour
-                    
-                    
+                    # neighbours: if there are no neighbouring islands 
+                    # in one direction, we do not build in that direction 
+                    neighbour_cells = neighbours[(i, j)]
+                    if neighbour_cells[0] is None:
+                        f.extend([[-n[i][j + 1].h1], [-n[i][j + 1].h2]])
+                    if neighbour_cells[1] is None:
+                        f.extend([[-n[i + 1][j].v1], [-n[i + 1][j].v2]])
+                    if neighbour_cells[2] is None:
+                        f.extend([[-n[i][j - 1].h1], [-n[i][j - 1].h2]])
+                    if neighbour_cells[3] is None:
+                        f.extend([[-n[i - 1][j].v1], [-n[i - 1][j].v2]])
+
                     # start_and_end: bridges need to start from and end at islands
                     f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
                     
