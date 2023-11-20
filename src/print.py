@@ -16,17 +16,17 @@ def print_to_txt(n, model, num):
 
         for i in range(0, len(model), 4):
             if n[I(i)][j].val != 0:
-                file.write(f'{n[I(i)][j].val}  ')
-                print(f'{n[I(i)][j].val}  ' , end=' ')
+                file.write(f'{n[I(i)][j].val} ')
+                print(f'{n[I(i)][j].val} ' , end=' ')
             else:
                 chunk = model[i:i + 4]
 
-                to_write = '0  '
+                to_write = '0 '
                 for c in chunk:
                     # if not (j > 0 and j < len(n[0])-1):
                     #     to_write = '~  '
                     if c > 0:
-                        to_write = chr(104 + ((c - i) // 3) * 14) + f"b{((c + 1) % 2) + 1}"
+                        to_write = chr(104 + ((c - i) // 3) * 14) + f"{((c + 1) % 2) + 1}"
                 file.write(to_write)
                 print(to_write, end=' ')
 
