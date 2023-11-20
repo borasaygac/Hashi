@@ -18,10 +18,14 @@ def parse_input_field(input_no, file_path):
         y_size = int(size_info[1])
 
         print(f"Dimensions are {x_size}, {y_size}\n")  # Test print for internal usage. DELETE LATER
-        contents = t.readlines()
-        for line in contents:
-            line.strip()
-    return x_size, y_size, contents
+        # add buffer edge around input
+        contents = [('.' * (y_size+2))]
+        read = t.readlines()
+        readLines = ['.'+ string[:-1] + '.' + string[-1] for string in read]
+        contents.extend(readLines)
+        contents.extend([('.' * (y_size+2))])
+        print(contents)
+    return x_size+2, y_size+2, contents
 
 
 
