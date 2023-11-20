@@ -31,3 +31,7 @@ def main(gui=False, numbr=1):
     field = initialise_field(field_info[0], field_info[1], field_info[2])
     nodes, vpool, formula = build_constraints(field)
     model = solve(vpool, formula)
+
+
+if __name__ == "__main__":
+    main()
