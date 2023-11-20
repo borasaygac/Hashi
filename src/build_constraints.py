@@ -40,8 +40,8 @@ def build_constraints(field, neighbours):
     #      for x in range(len(field))]   
         
     def build_constraints():
-        for i in range(0, len(field)):
-            for j in range(0, len(field[0])):
+        for i in range(1, len(field)-1):
+            for j in range(1, len(field[0])-1):
                 if n[i][j].val == 0:
                     # no cross: only one type of bridge on none island nodes
                     f.extend([[-n[i][j].h1, -n[i][j].v1], [-n[i][j].h2, -n[i][j].v2],

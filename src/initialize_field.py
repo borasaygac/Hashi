@@ -92,4 +92,4 @@ def initialise_field(x_size, y_size, contents):
         for element in row:
             print(element, end=' ')
         print("\n")
-    return initialised_field
+    return initialised_field, neighbours
