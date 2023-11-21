@@ -89,15 +89,12 @@ def clear():
             elem.destroy()
 
 
-
-
-
-
 root = tk.Tk()
 root.title("Group K")
-width = root.winfo_screenwidth()
-height = root.winfo_screenheight()
-root.geometry("%dx%d" % (width, height))  # Make it fullscreen with the os menu attached.
+width = root.winfo_screenwidth() / 2
+height = root.winfo_screenheight() / 2
+screenquarterheight = height / 2
+root.geometry(f'{int(width)}x{int(height)}+{int(width)}+{int(screenquarterheight)}')  # Make it fullscreen with the os menu attached.
 root.grid_rowconfigure(0, weight=0)
 root.grid_columnconfigure(0, weight=0)
 
