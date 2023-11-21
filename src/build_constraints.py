@@ -47,18 +47,18 @@ def build_constraints(field, neighbours):
                              ])
                     
                     # continuity: bridges extend from an island node to an island node  
-                    if i >= 1:
-                        f.extend([[-n[i][j].v1, n[i - 1][j].v1], [-n[i][j].v2, n[i - 1][j].v2]])
+                    # if i >= 1:
+                    #     f.extend([[-n[i][j].v1, n[i - 1][j].v1], [-n[i][j].v2, n[i - 1][j].v2]])
                     if i < len(field) - 1:
                         f.extend([[-n[i][j].v1, n[i + 1][j].v1], [-n[i][j].v2, n[i + 1][j].v2]])
-                    if j >= 1:
-                        f.extend([[-n[i][j].h1, n[i][j - 1].h1], [-n[i][j].h2, n[i][j - 1].h2]])
+                    # if j >= 1:
+                    #     f.extend([[-n[i][j].h1, n[i][j - 1].h1], [-n[i][j].h2, n[i][j - 1].h2]])
                     if j < len(field[0]) - 1:
                         f.extend([[-n[i][j].h1, n[i][j + 1].h1], [-n[i][j].h2, n[i][j + 1].h2]])
                 else:
                     
-                    # neighbours: if there are no neighbouring islands 
-                    # in one direction, we do not build in that direction 
+                    # neighbours: if there are no neighbouring island
+                    # in any direction, we do not build in that direction 
                     neighbour_cells = neighbours[(i, j)]
                     if neighbour_cells[0] is None:
                         f.extend([[-n[i][j + 1].h1], [-n[i][j + 1].h2]])
