@@ -1,5 +1,7 @@
 # This file is for parsing the input files
 import os
+
+
 def parse_input_field(file_path):
     contents = []  # Initializes contents of the field as a list
 
