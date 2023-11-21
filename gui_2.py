@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import os
+import main
 
 input_no = 1
 rows = []
@@ -27,7 +28,7 @@ def create_grid(x, y):
         for j in range(0, y):
             entry = tk.Entry(root)
             entry.grid(row=i + 3, column=j)
-            entry.insert(tk.END, '0')
+            entry.insert(tk.END, '.')
             cols.append(entry.get())
             grid[i][j] = entry
         rows.append(cols)
@@ -55,10 +56,13 @@ def save_x_y_to_txt():
         for i in range(0, x):
             for j in range(0, y):
                 value = entry_grid[i][j].get()
-                if (j % (len(entry_grid[0])-1) == 0) & (j != 0):
-                    file.write(f'{int(value)}\n')
+                if value != '.':
+                    file.write(f'{int(value)}')
                 else:
-                    file.write(f'{int(value)} ')
+                    file.write('.')
+                    
+                if (j % (len(entry_grid[0])-1) == 0) & (j != 0):
+                    file.write('\n')                    
 
     run_button = tk.Button(root,
                            text="Run Solver!",
@@ -69,7 +73,7 @@ def save_x_y_to_txt():
 def run_solver():
     global entry_grid
     global input_no
-    # main(True, input_no)
+    main.main(True, input_no)
     messagebox.showinfo("Ran Solver!", "You've ran the solver. Please check the Solution folder to see the result!")
     start_again_button = tk.Button(root,
                                    text="Start over?",

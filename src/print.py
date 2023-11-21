@@ -1,12 +1,15 @@
 import os
 
 
-def print_to_txt(n, model, num):
+def print_to_txt(n, model, num, gui=False):
     output_folder = os.path.join(os.getcwd(), 'Solution')
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-    output_path = os.path.join(output_folder, f'sol{num}.txt')
         
+    s = 'sol'
+    if gui:
+        s = 'man_input'
+    output_path = os.path.join(output_folder, f'{s}{num}.txt')    
     with open(output_path, 'w') as file:
         if model is None:
             file.write("No model!")
@@ -26,6 +29,7 @@ def print_to_txt(n, model, num):
                     # if not (j > 0 and j < len(n[0])-1):
                     #     to_write = '~  '
                     if c > 0:
+                        # print corresponding bridge symbol from {v1, v1, h1, h2}
                         to_write = chr(104 + ((c - i) // 3) * 14) + f"{((c + 1) % 2) + 1}"
                 file.write(to_write)
                 print(to_write, end=' ')
