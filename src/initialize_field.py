@@ -73,13 +73,14 @@ def initialise_field(x_size, y_size, contents):
 
         return closest_neighbors
 
-    # # Iterate over non-zero elements and find their closest neighbors
-    # for position in neighbours:
-    #     closest_neighbors = find_closest_neighbors(position)
-    #     neighbours[position] = closest_neighbors
-    #     print(f"Element {position} has closest neighbors at: {neighbours[position]}")
+    # Iterate over non-zero elements and find their closest neighbors
+    for position in neighbours:
+        closest_neighbors = find_closest_neighbors(position)
+        neighbours[position] = closest_neighbors
+        #print(f"Element {position} has closest neighbors at: {neighbours[position]}")
 
-    for row in initialised_field:
+
+    for row in initialised_field:  # Prints the 2d initialised_field for internal purposes. DELETE LATER.
         for element in row:
             print(element, end=' ')
         print("\n")
