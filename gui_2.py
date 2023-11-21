@@ -58,7 +58,7 @@ def save_x_y_to_txt():
                 if (j % (len(entry_grid[0])-1) == 0) & (j != 0):
                     file.write(f'{int(value)}\n')
                 else:
-                    file.write(f'{int(value)}')
+                    file.write(f'{int(value)} ')
 
     run_button = tk.Button(root,
                            text="Run Solver!",
@@ -70,7 +70,7 @@ def run_solver():
     global entry_grid
     global input_no
     # main(True, input_no)
-    messagebox.showinfo("Ran Solver!", "You've ran the solver. Please check the folder to see the result!")
+    messagebox.showinfo("Ran Solver!", "You've ran the solver. Please check the Solution folder to see the result!")
     start_again_button = tk.Button(root,
                                    text="Start over?",
                                    command=clear)

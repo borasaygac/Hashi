@@ -9,7 +9,7 @@ from itertools import combinations
 arr = [1, 2, 3, 4, 5, 6, 7, 8]
 bridge_sum_DNF = {}
 
-for r in range(1, 5):  # We're interested in lengths 1 to 4
+for r in range(0, 5):  # We're interested in lengths 1 to 4
     for comb in combinations(arr, r):
         s = set()
         subsequent_pair = False
@@ -22,7 +22,7 @@ for r in range(1, 5):  # We're interested in lengths 1 to 4
                 count_ver += 1
             else:
                 count_hor += 1
-            if(((num-1) in toAdd) & (num != 4) & (num % 2 == 1)):
+            if(((num-1) in toAdd) & (num != 4) & (num % 2 == 0)):
                 subsequent_pair = True
             else:
                 s.add(num)
@@ -37,7 +37,7 @@ for r in range(1, 5):  # We're interested in lengths 1 to 4
              bridge_sum_DNF[total] = []
         bridge_sum_DNF[total].append(list(toAdd))
         
-for i in range(1,9):
+for i in range(0,9):
     print(f"bridge_sum_DNF[{i}]=[", end=' ')
     for clause in bridge_sum_DNF[i]:
         print('[', end=' ')
@@ -47,25 +47,29 @@ for i in range(1,9):
     
     # Example dictionary of 2D arrays
 
-# Step 1: Merge all lists from the dictionary values into one big list B
-bridge_sum_merged = []
-for array in bridge_sum_DNF.values():
-    for sublist in array:
-        bridge_sum_merged.append(sublist)
 bridge_sum_CNF = {}
 
 def invert(sublist):
     return [-el for el in sublist]
     
 # Step 2: Iterate over the dictionary and filter B based on dict[i]
-for key, array in bridge_sum_DNF.items():
-    filtered_sublists = [sublist for sublist in bridge_sum_merged if sublist not in array]
-    filtered_sublists = [invert(sublist) for sublist in filtered_sublists]
-    bridge_sum_CNF[key] = filtered_sublists  # Replace dict[i] with filtered sublists
+for key, clauses in bridge_sum_DNF.items():
+    filtered_sublists = []
+    for clause in clauses:
+        filtered_sublists.append(invert(clause))
+    bridge_sum_DNF[key] = filtered_sublists  # Replace dict[i] with filtered sublists
+
+for key1 in bridge_sum_DNF.keys():
+    for key2, clauses in bridge_sum_DNF.items():
+        if(key1 != key2):
+            print(f"KEY!: {key1} AND KEY2: {key2}")
+            if key1 not in bridge_sum_CNF:
+                bridge_sum_CNF[key1] = []
+            bridge_sum_CNF[key1].extend(clauses)
 
 # Display the updated dictionary
 
-for i in range(1,9):
+for i in range(0,9):
     print(f"bridge_sum_CNF[{i}]=[", end=' ')
     for clause in bridge_sum_CNF[i]:
         print('[', end=' ')
