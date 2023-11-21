@@ -18,7 +18,7 @@ def main(gui=False, numbr=1):
         num = int(sys.argv[1])
         print(f"Running solver on test {num}.......")
         folder = os.path.join(os.getcwd(), 'Project_1')
-        file = f'{folder}\input{num}.txt'
+        file = f'{folder}\\test{num}.txt'
     elif gui:  # Secondary main condition for the GUI. Parametrized input file selection.
         print(f"Running solver on the file generated from GUI. File Name: input_man{numbr}.txt")
         folder = os.path.join(os.getcwd(), 'Project_1')
@@ -27,10 +27,11 @@ def main(gui=False, numbr=1):
         print(f"Running solver on test {num}.......")
         folder = os.path.join(os.getcwd(), 'project_1')
         file = f'{folder}/test{num}.txt'
-    field_info = parse_input_field(num, file)
-    field = initialise_field(field_info[0], field_info[1], field_info[2])
-    nodes, vpool, formula = build_constraints(field)
+    field_info = parse_input_field(file)
+    field, neighbours = initialise_field(field_info[0], field_info[1], field_info[2])
+    nodes, vpool, formula = build_constraints(field, neighbours)
     model = solve(vpool, formula)
+    print_to_txt(nodes, model, gui, num)
 
 
 if __name__ == "__main__":
