@@ -1,8 +1,4 @@
-<<<<<<<<< Temporary merge branch 1
-10 10
-=========
 9 10
->>>>>>>>> Temporary merge branch 2
 .2....4..3
 ..........
 1.........

@@ -52,12 +52,11 @@ bridge_sum_CNF = {}
 def invert(sublist):
     return [-el for el in sublist]
     
-# Step 2: Iterate over the dictionary and filter B based on dict[i]
 for key, clauses in bridge_sum_DNF.items():
     filtered_sublists = []
     for clause in clauses:
         filtered_sublists.append(invert(clause))
-    bridge_sum_DNF[key] = filtered_sublists  # Replace dict[i] with filtered sublists
+    bridge_sum_DNF[key] = filtered_sublists
 
 for key1 in bridge_sum_DNF.keys():
     for key2, clauses in bridge_sum_DNF.items():
