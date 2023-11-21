@@ -23,6 +23,7 @@ def main(gui=False, numbr=1):
         print(f"Running solver on the file generated from GUI. File Name: input_man{numbr}.txt")
         folder = os.path.join(os.getcwd(), 'Project_1')
         file = f'{folder}\input_man{numbr}.txt'
+        num = numbr
     else:
         print(f"Running solver on test {num}.......")
         folder = os.path.join(os.getcwd(), 'project_1')
@@ -31,7 +32,7 @@ def main(gui=False, numbr=1):
     field, neighbours = initialise_field(field_info[0], field_info[1], field_info[2])
     nodes, vpool, formula = build_constraints(field, neighbours)
     model = solve(vpool, formula)
-    print_to_txt(nodes, model, gui, num)
+    print_to_txt(nodes, model, num, gui)
 
 
 if __name__ == "__main__":
