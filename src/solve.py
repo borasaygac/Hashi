@@ -10,8 +10,5 @@ def solve(vpool, f):
 
     if model is None:
         return
-    res = list(map(lambda x: vpool.obj(x) if x > 0 else '~' + vpool.obj(-x), model))
-    print(res)
-    print()
-
+    print(list(map(lambda x: vpool.obj(x) if x > 0 else '~' + vpool.obj(-x), model)))
     return model
