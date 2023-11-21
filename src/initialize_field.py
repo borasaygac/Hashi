@@ -22,7 +22,6 @@ def initialise_field(x_size, y_size, contents):
     def find_closest_neighbors(position):
         x, y = position
         closest_neighbors = []
-        print(f"x,y: {x}, {y}")
         # Check right
         if (y == len(initialised_field[0]) - 1):
             closest_neighbors.append(None)
