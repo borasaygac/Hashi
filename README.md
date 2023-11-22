@@ -2,11 +2,11 @@
 
 Some thoughts: 
 
-1. We need to encode one further constraint to prevent unwarranted bridge building. For this, we need 4 further variables obtainable during traversal of the field: We collect the Nodes grouped by horizontal index j in map H and Nodes grouped by vertical index i in map V. Then during traversal of nodes array, we set the variables respectively by accessing the maps.
+optimization:
 
-2. generate candidate set
-3. satisfying island value
-4. cancel out multiple bridge in the same direction ->SOLVED
+1. Remove filtering of invalid clauses while generating degree constraint
+2. Dont care variables are set to false, no need for hor or vert set
+3. Do not add corner nodes, since they are not in CNF, so PySat shall skip them
 
 Approach for candidate set generation:
 Before building degree constraint we iterate over all draws of size 1 <= k <= 4 (only a maximum of 4 variables can be true at once) for a size 8 set that symbolizes all            possibilities [ n[i-1][j].v2, n[i-1][j].v1,n[i+1][j].v2, n[i+1][j].v1, n[i][j-1].h2, n[i][j-1].h1, n[i][j+1].h2, n[i][j+1].h1].
