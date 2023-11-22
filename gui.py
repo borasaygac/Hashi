@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 import main
+from random import randint
+from math import floor
+from numpy import random
 
 input_no = 1
 rows = []
@@ -89,6 +92,18 @@ def clear():
             elem.destroy()
 
 
+def randomized_field():
+    random_x_size = randint(3, 15)
+    random_y_size = randint(3, 15)
+    random_array = [[-1 for x in range(random_x_size + 2)] for y in range(random_y_size + 2)]
+
+    random_island_sum = randint(2, floor((random_x_size * random_y_size) / 2))
+    random_island_bridge_no = randint(1, 8)
+
+    island_locations = random.randint(0, 8, size=(random_x_size,random_y_size))
+    print(island_locations)
+
+
 root = tk.Tk()
 root.title("Group K")
 width = root.winfo_screenwidth() / 2
@@ -103,15 +118,20 @@ entry_x = tk.Entry(root)
 label_y = tk.Label(root, text="Y Value")
 entry_y = tk.Entry(root)
 
-button = tk.Button(root, text="Confirm",
-                   command=save_values,
-                   padx=2, pady=1)
+confirm_button = tk.Button(root, text="Confirm",
+                           command=save_values,
+                           padx=2, pady=2)
+
+random_gen_button = tk.Button(root, text="Generate Puzzle",
+                              command=randomized_field,
+                              padx=2, pady=2)
 
 
-label_x.grid(row=0, column=0)
-entry_x.grid(row=0, column=1)
-label_y.grid(row=1, column=0)
-entry_y.grid(row=1, column=1)
-button.grid(row=2)
+label_x.grid(row=0, column=0, rowspan=4, columnspan=2)
+entry_x.grid(row=0, column=5, rowspan=2)
+label_y.grid(row=4, column=0, rowspan=4, columnspan=2)
+entry_y.grid(row=4, column=5, rowspan=2, columnspan=2)
+confirm_button.grid(row=9, column=5, columnspan=4)
+random_gen_button.grid(row=0, column=9, columnspan=4, rowspan=2, padx=2, pady=2)
 
 root.mainloop()
