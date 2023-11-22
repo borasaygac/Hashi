@@ -4,7 +4,6 @@ import os
 import main
 from random import randint
 from math import floor
-from numpy import random
 
 input_no = 1
 rows = []
@@ -30,7 +29,7 @@ def create_grid(x, y):
     for i in range(0, x):
         for j in range(0, y):
             entry = tk.Entry(root)
-            entry.grid(row=i + 3, column=j)
+            entry.grid(row=i + 10, column=j)
             entry.insert(tk.END, '.')
             cols.append(entry.get())
             grid[i][j] = entry
@@ -38,7 +37,7 @@ def create_grid(x, y):
     txt_button = tk.Button(root,
                            text="Save values and create grid.",
                            command=lambda: save_x_y_to_txt())
-    txt_button.grid(row=x+4, column=0, columnspan=2, rowspan=1)
+    txt_button.grid(row=x+30, column=0, columnspan=2, rowspan=1)
     entry_grid = grid
     return grid
 
@@ -70,7 +69,7 @@ def save_x_y_to_txt():
     run_button = tk.Button(root,
                            text="Run Solver!",
                            command=run_solver)
-    run_button.grid(row=x + 5, column=0, columnspan=2, rowspan=1)
+    run_button.grid(row=x + 16, column=0, columnspan=2, rowspan=1)
 
 
 def run_solver():
@@ -81,12 +80,12 @@ def run_solver():
     start_again_button = tk.Button(root,
                                    text="Start over?",
                                    command=clear)
-    start_again_button.grid(row=int(entry_x.get())+6, column=0, columnspan=2, rowspan=1)
+    start_again_button.grid(row=int(entry_x.get())+12, column=0, columnspan=2, rowspan=1)
     input_no += 1
 
 
 def clear():
-    for i in range(3, int(entry_x.get())+7):
+    for i in range(10, int(entry_x.get())+40):
         todeletelist = root.grid_slaves(row=i)
         for elem in todeletelist:
             elem.destroy()
@@ -95,13 +94,46 @@ def clear():
 def randomized_field():
     random_x_size = randint(3, 15)
     random_y_size = randint(3, 15)
-    random_array = [[-1 for x in range(random_x_size + 2)] for y in range(random_y_size + 2)]
+    random_array = [[-1 for y in range(random_y_size + 2)] for x in range(random_x_size + 2)]  # Create random 2d array
+    islands = []
+
+    class Island:
+        def __init__(self,
+                     x,
+                     y,
+                     bridge_no,
+                     horizontal_bridge1=None,
+                     horizontal_bridge2=None,
+                     vertical_bridge1=None,
+                     vertical_bridge2=None):
+            self.x = x
+            self.y = y
+            self.val = bridge_no
+            self.h1 = horizontal_bridge1
+            self.h2 = horizontal_bridge2
+            self.v1 = vertical_bridge1
+            self.v2 = vertical_bridge2
+
+    rand_island = Island(randint(1, random_x_size-1), randint(1, random_y_size-1), randint(1, 8))
+    islands.append(rand_island)
+
+    for i in range(1, random_x_size + 1):
+        for j in range(1, random_y_size + 1):
+            random_array[i][j] = 0
+
+
+    for elem in islands:
+        print(elem.val, elem.x, elem.y)
+        print(random_x_size, random_y_size)
+
+    random_array[rand_island.x][rand_island.y] = rand_island.val
+
+    for i in range(0, len(random_array)):
+        print(f'{random_array[i]}\n')
 
     random_island_sum = randint(2, floor((random_x_size * random_y_size) / 2))
     random_island_bridge_no = randint(1, 8)
 
-    island_locations = random.randint(0, 8, size=(random_x_size,random_y_size))
-    print(island_locations)
 
 
 root = tk.Tk()
