@@ -15,10 +15,10 @@ def parse_input_field(file_path):
         contents = [('.' * (y_size+2))]
         read = t.readlines()
         readLines = ['.'+ string[:-1] + '.' + string[-1] for string in read]
-        print(readLines)
+        #print(readLines)
         contents.extend(readLines)
         contents.extend([('.' * (y_size+2))])
-        print(contents)
+        #print(contents)
     return x_size+2, y_size+2, contents
 
 

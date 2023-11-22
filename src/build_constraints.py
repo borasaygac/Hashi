@@ -94,6 +94,8 @@ def build_constraints(field, neighbours):
                     mapped_clauses = [[int(math.copysign(1, literal))*mapping[abs(literal)] for literal in clause] for clause in clauses]
                     
                     f.extend(mapped_clauses)
-                    
+    
+        
     build_constraints()
+
     return n, vpool, f

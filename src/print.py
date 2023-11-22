@@ -1,18 +1,19 @@
 import os
 
 
-def print_to_txt(n, model, num, gui=False):
+def print_to_txt(n, model, num, gui):
+
     output_folder = os.path.join(os.getcwd(), 'Solution')
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
         
-    s = 'sol'
-    if gui:
-        s = 'man_input'
+    s = 'man_input' if gui else 'test'
+    
     output_path = os.path.join(output_folder, f'{s}{num}.txt')    
     with open(output_path, 'w') as file:
         if model is None:
             file.write("No model!")
+            print("No model!")
             return
         j = 0
         I = lambda i: (i // 4) // len(n[0])
@@ -42,4 +43,5 @@ def print_to_txt(n, model, num, gui=False):
             else:
                 file.write('  ')
                 print('  ', end=' ')
-    print('0')
+        file.write('0')
+        print('0')
