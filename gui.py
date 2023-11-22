@@ -108,8 +108,9 @@ def randomized_field():
 
     random_array[x + 1][y + 1] = bridge_no
 
-    dir_dic = [(0, 1), (1, 0), (-1, 0), (0, -1)]
-    bridge_dic = [9, 10]
+    dir = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+    bridges = [9, 10]
+    val = 0
 
     def build(x, y, grid, bridge, prev_dir):
         if x > len(grid) - 1 or y > len(grid) - 1 or x < 1 or y < 1:
@@ -117,26 +118,33 @@ def randomized_field():
         if grid[x][y] == 9 or grid[x][y] == 10:
             return
         if grid[x][y] != 0:
-            grid[x][y] += bridge
+            if val == -1:
+                x -= dir[prev_dir][0]
+                y -= dir[prev_dir][1]
+                grid[x][y] -= bridge
+            rand = randint(0, 3)
+            grid[x][y] += bridge % 4
+            val_tmp = build(x + dir[rand][0], y + dir[rand][1], grid, randint(9, 10), dir[rand])
+            val_tmp = val
+            return -1
         action = randint(1, 2)  # 1 == build 2 == cont
         if action == 1:
-            if grid[x][y] == 0:
-                grid[x][y] += bridge
-            dir_rand = randint(0, 3)
+            rand = randint(0, 3)
             # Potential while here
-            build(x + dir_dic[dir_rand][0], y + dir_dic[dir_rand][1], grid, randint(9, 10), dir_dic[dir_rand])
+            build(x + dir[rand][0], y + dir[rand][1], grid, randint(9, 10), dir[rand])
         else:
             grid[x][y] = bridge
-            build(x + dir_dic[prev_dir[0]][0], y + dir_dic[prev_dir[1]][1], grid, bridge, prev_dir)
+            build(x + prev_dir[0], y + prev_dir[1], grid, bridge, prev_dir)
+            grid[x][y] = 0
 
     first_random_dir = randint(0, 3)
-    build(x + dir_dic[first_random_dir][0], y + dir_dic[first_random_dir][1],
-          random_array, randint(9, 10), dir_dic[first_random_dir])
+    build(x + dir[first_random_dir][0], y + dir[first_random_dir][1],
+          random_array, randint(9, 10), dir[first_random_dir])
 
     for i in range(0, len(random_array)):
         print(f'{random_array[i]}\n')
 
-    print(dir_dic[first_random_dir])
+    print(dir[first_random_dir])
     print(rand_island)
 
 
