@@ -95,45 +95,49 @@ def randomized_field():
     random_x_size = randint(3, 15)
     random_y_size = randint(3, 15)
     random_array = [[-1 for y in range(random_y_size + 2)] for x in range(random_x_size + 2)]  # Create random 2d array
-    islands = []
-
-    class Island:
-        def __init__(self,
-                     x,
-                     y,
-                     bridge_no,
-                     horizontal_bridge1=None,
-                     horizontal_bridge2=None,
-                     vertical_bridge1=None,
-                     vertical_bridge2=None):
-            self.x = x
-            self.y = y
-            self.val = bridge_no
-            self.h1 = horizontal_bridge1
-            self.h2 = horizontal_bridge2
-            self.v1 = vertical_bridge1
-            self.v2 = vertical_bridge2
-
-    rand_island = Island(randint(1, random_x_size-1), randint(1, random_y_size-1), randint(1, 8))
-    islands.append(rand_island)
 
     for i in range(1, random_x_size + 1):
         for j in range(1, random_y_size + 1):
             random_array[i][j] = 0
 
+    x = randint(1, random_x_size-1)
+    y = randint(1, random_y_size-1)
+    bridge_no = randint(1, 8)
 
-    for elem in islands:
-        print(elem.val, elem.x, elem.y)
-        print(random_x_size, random_y_size)
+    rand_island = (x, y, bridge_no)
 
-    random_array[rand_island.x][rand_island.y] = rand_island.val
+    random_array[x + 1][y + 1] = bridge_no
+
+    dir_dic = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+    bridge_dic = [9, 10]
+
+    def build(x, y, grid, bridge, prev_dir):
+        if x > len(grid) - 1 or y > len(grid) - 1 or x < 1 or y < 1:
+            return
+        if grid[x][y] == 9 or grid[x][y] == 10:
+            return
+        if grid[x][y] != 0:
+            grid[x][y] += bridge
+        action = randint(1, 2)  # 1 == build 2 == cont
+        if action == 1:
+            if grid[x][y] == 0:
+                grid[x][y] += bridge
+            dir_rand = randint(0, 3)
+            # Potential while here
+            build(x + dir_dic[dir_rand][0], y + dir_dic[dir_rand][1], grid, randint(9, 10), dir_dic[dir_rand])
+        else:
+            grid[x][y] = bridge
+            build(x + dir_dic[prev_dir[0]][0], y + dir_dic[prev_dir[1]][1], grid, bridge, prev_dir)
+
+    first_random_dir = randint(0, 3)
+    build(x + dir_dic[first_random_dir][0], y + dir_dic[first_random_dir][1],
+          random_array, randint(9, 10), dir_dic[first_random_dir])
 
     for i in range(0, len(random_array)):
         print(f'{random_array[i]}\n')
 
-    random_island_sum = randint(2, floor((random_x_size * random_y_size) / 2))
-    random_island_bridge_no = randint(1, 8)
-
+    print(dir_dic[first_random_dir])
+    print(rand_island)
 
 
 root = tk.Tk()
