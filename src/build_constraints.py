@@ -1,5 +1,5 @@
 from pysat.formula import CNF, IDPool
-from assets.bridge_sum import bridge_sum_CNF as bridges
+from assets.bridge_sum import bridge_sum_CNF as bridge_sum
 import math
 
 
@@ -46,7 +46,7 @@ def build_constraints(field, neighbours):
                               
                              ])
                     
-                    #continuity: bridges extend from an island node to an island node  
+                    # continuity: bridges extend from an island node to an island node  
                     if i >= 1:
                         f.extend([[-n[i][j].v1, n[i - 1][j].v1], [-n[i][j].v2, n[i - 1][j].v2]])
                     if i < len(field) - 1:
@@ -73,7 +73,7 @@ def build_constraints(field, neighbours):
                     f.extend([[n[i][j].h1], [n[i][j].v1], [n[i][j].h2], [n[i][j].v2]])
                     
                     # degree: bridges built by an island must be equal to its node val
-                    clauses = bridges[n[i][j].val]
+                    clauses = bridge_sum[n[i][j].val]
                     
                     # Since the clauses carry index integers, we need to map them to their corresponding value
                     mapping = {}

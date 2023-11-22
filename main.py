@@ -1,3 +1,4 @@
+import timeit
 from src.parse_input import parse_input_field
 from src.initialize_field import initialise_field
 from src.build_constraints import build_constraints
@@ -37,3 +38,5 @@ def main(gui=False, numbr=1):
 
 if __name__ == "__main__":
     main()
+    print(timeit.repeat(lambda: main(), number=5))
+
