@@ -1,8 +1,8 @@
-# Project Name
-Project 1
-## Description
+# Project 1 SAT-Solving
 
-Provide a brief overview of your project, including its purpose, goals, and any essential information.
+## instructions
+
+You can start the raw solver without the gui from terminal with `python main.py` on root level. By default, it will solve the first the file, you can customise the input by providing the number of you test file, i.e. `python main.py 8`. The GUI can be started with `python gui.py`.
 
 ## Performance Metrics
 
