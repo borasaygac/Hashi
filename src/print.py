@@ -27,8 +27,6 @@ def print_to_txt(n, model, num, gui):
 
                 to_write = '0 '
                 for c in chunk:
-                    # if not (j > 0 and j < len(n[0])-1):
-                    #     to_write = '~  '
                     if c > 0:
                         # print corresponding bridge symbol from {v1, v1, h1, h2}
                         to_write = chr(104 + ((c - i) // 3) *
