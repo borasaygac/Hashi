@@ -28,7 +28,7 @@ def build_constraints(field, neighbours):
             for j in range(0, len(field[0])):
                     n[i][j] = Node(field[i][j], v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
                     
-                    # frame variables are necessary to build degree constraint but should themselves be set to false to help with connectivity constrain later
+                    # frame variables are necessary to build degree constraint but should themselves be set to false to help with connectivity constraint later
                     if i == 0 or i == (len(field) - 1) or j == 0 or (j == len(field[0])-1):
                         f.extend([[-n[i][j].h1], [-n[i][j].h2], [-n[i][j].v1], [-n[i][j].v2]])
         return n
