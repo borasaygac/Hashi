@@ -8,7 +8,7 @@ def initialise_field(x_size, y_size, contents):
                 initialised_field[i][j] = int(contents[i][j])
             else:
                 initialised_field[i][j] = 0
-                
+
     neighbours = {}  # Dictionary to store non-zero elements and their positions
 
     # Store non-zero elements and their positions
@@ -75,10 +75,10 @@ def initialise_field(x_size, y_size, contents):
     for position in neighbours:
         closest_neighbors = find_closest_neighbors(position)
         neighbours[position] = closest_neighbors
-        #print(f"Element {position} has closest neighbors at: {neighbours[position]}")
+        # print(f"Element {position} has closest neighbors at: {neighbours[position]}")
 
-
-    for row in initialised_field:  # Prints the 2d initialised_field for internal purposes. DELETE LATER.
+    # Prints the 2d initialised_field for internal purposes. DELETE LATER.
+    for row in initialised_field:
         for element in row:
             print(element, end=' ')
         print("\n")

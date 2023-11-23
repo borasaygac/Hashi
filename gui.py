@@ -62,9 +62,9 @@ def save_x_y_to_txt():
                     file.write(f'{int(value)}')
                 else:
                     file.write('.')
-                    
+
                 if (j % (len(entry_grid[0])-1) == 0) & (j != 0):
-                    file.write('\n')                    
+                    file.write('\n')
 
     run_button = tk.Button(root,
                            text="Run Solver!",
@@ -76,11 +76,13 @@ def run_solver():
     global entry_grid
     global input_no
     main.main(True, input_no)
-    messagebox.showinfo("Ran Solver!", "You've ran the solver. Please check the Solution folder to see the result!")
+    messagebox.showinfo(
+        "Ran Solver!", "You've ran the solver. Please check the Solution folder to see the result!")
     start_again_button = tk.Button(root,
                                    text="Start over?",
                                    command=clear)
-    start_again_button.grid(row=int(entry_x.get())+12, column=0, columnspan=2, rowspan=1)
+    start_again_button.grid(row=int(entry_x.get())+12,
+                            column=0, columnspan=2, rowspan=1)
     input_no += 1
 
 
@@ -94,7 +96,8 @@ def clear():
 def randomized_field():
     random_x_size = randint(3, 15)
     random_y_size = randint(3, 15)
-    random_array = [[-1 for y in range(random_y_size + 2)] for x in range(random_x_size + 2)]  # Create random 2d array
+    random_array = [[-1 for y in range(random_y_size + 2)]
+                    for x in range(random_x_size + 2)]  # Create random 2d array
 
     for i in range(1, random_x_size + 1):
         for j in range(1, random_y_size + 1):
@@ -124,14 +127,16 @@ def randomized_field():
                 grid[x][y] -= bridge
             rand = randint(0, 3)
             grid[x][y] += bridge % 4
-            val_tmp = build(x + dir[rand][0], y + dir[rand][1], grid, randint(9, 10), dir[rand])
+            val_tmp = build(x + dir[rand][0], y + dir[rand]
+                            [1], grid, randint(9, 10), dir[rand])
             val_tmp = val
             return -1
         action = randint(1, 2)  # 1 == build 2 == cont
         if action == 1:
             rand = randint(0, 3)
             # Potential while here
-            build(x + dir[rand][0], y + dir[rand][1], grid, randint(9, 10), dir[rand])
+            build(x + dir[rand][0], y + dir[rand][1],
+                  grid, randint(9, 10), dir[rand])
         else:
             grid[x][y] = bridge
             build(x + prev_dir[0], y + prev_dir[1], grid, bridge, prev_dir)
@@ -153,7 +158,9 @@ root.title("Group K")
 width = root.winfo_screenwidth() / 2
 height = root.winfo_screenheight() / 2
 screenquarterheight = height / 2
-root.geometry(f'{int(width)}x{int(height)}+{int(width)}+{int(screenquarterheight)}')  # Make it fullscreen with the os menu attached.
+# Make it fullscreen with the os menu attached.
+root.geometry(
+    f'{int(width)}x{int(height)}+{int(width)}+{int(screenquarterheight)}')
 root.grid_rowconfigure(0, weight=0)
 root.grid_columnconfigure(0, weight=0)
 
@@ -176,6 +183,7 @@ entry_x.grid(row=0, column=5, rowspan=2)
 label_y.grid(row=4, column=0, rowspan=4, columnspan=2)
 entry_y.grid(row=4, column=5, rowspan=2, columnspan=2)
 confirm_button.grid(row=9, column=5, columnspan=4)
-random_gen_button.grid(row=0, column=9, columnspan=4, rowspan=2, padx=2, pady=2)
+random_gen_button.grid(row=0, column=9, columnspan=4,
+                       rowspan=2, padx=2, pady=2)
 
 root.mainloop()
