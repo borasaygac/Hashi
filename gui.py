@@ -1,3 +1,5 @@
+import copy
+import random
 import tkinter as tk
 from tkinter import messagebox
 import os
@@ -93,64 +95,75 @@ def clear():
             elem.destroy()
 
 
-def randomized_field():
-    random_x_size = randint(3, 15)
-    random_y_size = randint(3, 15)
-    random_array = [[-1 for y in range(random_y_size + 2)]
-                    for x in range(random_x_size + 2)]  # Create random 2d array
+def generate_puzzle():
+    return
+    # random_x_size = randint(3, 15)
+    # random_y_size = randint(3, 15)
+    # random_array = [[-1 for y in range(random_y_size + 2)]
+    #                 for x in range(random_x_size + 2)]  # Create random 2d array
 
-    for i in range(1, random_x_size + 1):
-        for j in range(1, random_y_size + 1):
-            random_array[i][j] = 0
+    # for i in range(1, random_x_size + 1):
+    #     for j in range(1, random_y_size + 1):
+    #         random_array[i][j] = 0
 
-    x = randint(1, random_x_size-1)
-    y = randint(1, random_y_size-1)
-    bridge_no = randint(1, 8)
+    # x = randint(1, random_x_size-1)
+    # y = randint(1, random_y_size-1)
+    # rand_island = (x, y, 1)
 
-    rand_island = (x, y, bridge_no)
+    # random_array[x + 1][y + 1] = 1
+    # dir = [(0, 1), (1, 0), (-1, 0), (0, -1)]
 
-    random_array[x + 1][y + 1] = bridge_no
+    # def build(x, y, grid, bridge, prev_dir, built):
+    #     if built == 0:
+    #         return None
+    #     if x > len(grid) - 1 or y > len(grid) - 1 or x < 1 or y < 1:
+    #         return False
+    #     if grid[x][y] == 9 or grid[x][y] == 10:
+    #         return False
 
-    dir = [(0, 1), (1, 0), (-1, 0), (0, -1)]
-    bridges = [9, 10]
-    val = 0
+    #     copy_dir = copy.deepcopy(dir)
+    #     random.shuffle(copy_dir)
 
-    def build(x, y, grid, bridge, prev_dir):
-        if x > len(grid) - 1 or y > len(grid) - 1 or x < 1 or y < 1:
-            return
-        if grid[x][y] == 9 or grid[x][y] == 10:
-            return
-        if grid[x][y] != 0:
-            if val == -1:
-                x -= dir[prev_dir][0]
-                y -= dir[prev_dir][1]
-                grid[x][y] -= bridge
-            rand = randint(0, 3)
-            grid[x][y] += bridge % 4
-            val_tmp = build(x + dir[rand][0], y + dir[rand]
-                            [1], grid, randint(9, 10), dir[rand])
-            val_tmp = val
-            return -1
-        action = randint(1, 2)  # 1 == build 2 == cont
-        if action == 1:
-            rand = randint(0, 3)
-            # Potential while here
-            build(x + dir[rand][0], y + dir[rand][1],
-                  grid, randint(9, 10), dir[rand])
-        else:
-            grid[x][y] = bridge
-            build(x + prev_dir[0], y + prev_dir[1], grid, bridge, prev_dir)
-            grid[x][y] = 0
+    #     action = randint(1, 2)  # 1 == build 2 == cont
 
-    first_random_dir = randint(0, 3)
-    build(x + dir[first_random_dir][0], y + dir[first_random_dir][1],
-          random_array, randint(9, 10), dir[first_random_dir])
+    #     if ((action == 1 and not (1 <= grid[x-1][y] <=8 or 1 <= grid[x][y-1] <=8 or 1 <= grid[x+1][y] <=8 or 1 <= grid[x][y+1] <=8)) or grid[x][y] != 0):
+    #         try_bridge = randint(9, 10)
+    #         grid[x][y] += bridge % 4
+    #         while (len(copy_dir) > 0):
+    #             if action == 1:
+    #                 if (build(x + copy_dir[0][0], y + copy_dir[0][1],
+    #                         grid, try_bridge, copy_dir[0], built-1) == False):
+    #                     grid[x][y] -= bridge % 4
+    #                     copy_dir.remove(copy_dir[0])
+    #                 else:
+    #                     grid[x][y] += try_bridge % 4
+    #                     return None
+    #             else:
+    #                 if (build(x + copy_dir[0][0], y + copy_dir[0][1],
+    #                         grid, try_bridge, copy_dir[0], built) == False):
+    #                     grid[x][y] -= bridge % 4
+    #                     copy_dir.remove(copy_dir[0])
+    #                 else:
+    #                     grid[x][y] += try_bridge % 4
+    #                     return None
+                    
 
-    for i in range(0, len(random_array)):
-        print(f'{random_array[i]}\n')
+    #     else:
+    #         grid[x][y] = bridge
+    #         if (build(x + prev_dir[0], y + prev_dir[1], grid, bridge, prev_dir, built) == False):
+    #             grid[x][y] = 0
+    #             return False
+            
+    # while(len(dir) > 0):
+    #     if (build(x + dir[0][0], y + dir[0][1],
+    #     random_array, randint(9, 10), dir[0], 5)) == False:
+    #         dir.remove(dir[0])
+    #     else: 
+    #         break
 
-    print(dir[first_random_dir])
-    print(rand_island)
+    # for i in range(0, len(random_array)):
+    #     print(f'{random_array[i]}\n')
+    # print(rand_island)
 
 
 root = tk.Tk()
@@ -174,7 +187,7 @@ confirm_button = tk.Button(root, text="Confirm",
                            padx=2, pady=2)
 
 random_gen_button = tk.Button(root, text="Generate Puzzle",
-                              command=randomized_field,
+                              command=generate_puzzle,
                               padx=2, pady=2)
 
 
