@@ -6,10 +6,10 @@ You can start the raw solver without the gui from terminal with `python main.py`
 
 ## Performance Metrics
 
-### Code Speed Measurements
+### Default:
 
 #### Input 1
-- Description: Describe the input data used for measurement 1.
+- Description: Various 
 - Time taken: Insert measured time for input 1.
 
 #### Input 2
