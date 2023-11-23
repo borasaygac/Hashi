@@ -2,34 +2,19 @@
 
 ## Instructions
 
-You can start the raw solver without the gui from terminal with `python main.py` on root level. By default, it will solve the first the file, you can customise the input by providing the number of you test file, i.e. `python main.py 8`. The GUI can be started with `python gui.py`.
+You can start the raw solver without the gui from terminal with `python main.py` on root level. By default, it will solve the first test file, you can customise the input by providing the number of the test file, i.e. `python main.py 8`. The GUI can be started with `python gui.py`.
+
+## Optimisation
+
+Looking at the metrics, our default implementation already is quite speedy. However, we were able to even further cut down on execution time by excluding clauses belonging to the degree constraint that we can determine invalid even before running the solver. You can have a look at the difference between the sets of clauses for the degree constraint in `assets/bridge_sum.py` (list of clauses) and `assets/generate.py` (construction of clauses).
 
 ## Performance Metrics
 
-### Default:
+We display the run times in in seconds as a pair (not optimized, optimized).
 
-#### Input 1
-- Description: Various 
-- Time taken: Insert measured time for input 1.
+- Test 1: (0.04, 0.03)
+- Test 2: (0.08, 0.06)
+- Test 3: (0.1, 0.07)
+- Test 11: (0.22, 0.15)
 
-#### Input 2
-- Description: Describe the input data used for measurement 2.
-- Time taken: Insert measured time for input 2.
 
-#### Input 3
-- Description: Describe the input data used for measurement 3.
-- Time taken: Insert measured time for input 3.
-
-<!-- Add more subsections for different inputs as needed -->
-
-## Usage
-
-Provide instructions on how to use or run the code. Include any prerequisites or dependencies required.
-
-## Contributing
-
-Explain how others can contribute to the project, whether through bug fixes, enhancements, or feedback.
-
-## License
-
-Specify the license under which the project is released.

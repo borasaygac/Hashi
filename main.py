@@ -46,4 +46,3 @@ def main(gui=False, numbr=1):
 
 if __name__ == "__main__":
     main()
-    print(timeit.repeat(lambda: main(), repeat=5, number=1))

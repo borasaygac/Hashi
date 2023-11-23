@@ -1,5 +1,5 @@
 from pysat.formula import CNF, IDPool
-from assets.bridge_sum import bridge_sum_CNF as bridge_sum
+from assets.bridge_sum import bridge_sum_CNF_opt as bridge_sum
 import math
 
 

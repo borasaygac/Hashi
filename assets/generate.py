@@ -26,6 +26,7 @@ for r in range(0, 5):  # We're interested in lengths 1 to 4
             toAdd.remove(-num)
 
         # prevent invalid combinations of 2, 3 or 4 truthy variables
+        # this is where the optimisation happens
         if (count_hor > 2) | (count_ver > 2) | (subsequent_pair):
             continue
 
