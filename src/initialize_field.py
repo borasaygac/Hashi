@@ -11,7 +11,6 @@ def initialise_field(x_size, y_size, contents):
                 
     neighbours = {}  # Dictionary to store non-zero elements and their positions
 
-
     # Store non-zero elements and their positions
     for i, row in enumerate(initialised_field):
         for j, value in enumerate(row):

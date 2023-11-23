@@ -27,6 +27,10 @@ def build_constraints(field, neighbours):
         for i in range(0, len(field)):
             for j in range(0, len(field[0])):
                     n[i][j] = Node(field[i][j], v(f'h_{i}_{j}'), v(f'dh_{i}_{j}'), v(f'v_{i}_{j}'), v(f'dv_{i}_{j}'))
+                    
+                    # frame variables are necessary to build degree constraint but should themselves be set to false to help with connectivity constrain later
+                    if i == 0 or i == (len(field) - 1) or j == 0 or (j == len(field[0])-1):
+                        f.extend([[-n[i][j].h1], [-n[i][j].h2], [-n[i][j].v1], [-n[i][j].v2]])
         return n
 
     n = initialize_nodes()
@@ -35,15 +39,12 @@ def build_constraints(field, neighbours):
         for i in range(1, len(field)-1):
             for j in range(1, len(field[0])-1):
                 if n[i][j].val == 0:
+                    
                     # no cross: only one type of bridge on none island nodes
                     f.extend([[-n[i][j].h1, -n[i][j].v1], [-n[i][j].h2, -n[i][j].v2],
                               [-n[i][j].h1, -n[i][j].v2], [-n[i][j].h2, -n[i][j].v1],
                               [-n[i][j].h1, -n[i][j].h2], [-n[i][j].h2, -n[i][j].h1],
-                              
-                              [-n[i][j].v1, -n[i][j].h1], [-n[i][j].v2, -n[i][j].h1],
-                              [-n[i][j].v1, -n[i][j].v2], [-n[i][j].v2, -n[i][j].v1],
-                              [-n[i][j].v1, -n[i][j].h2], [-n[i][j].v2, -n[i][j].h2],
-                              
+                              [-n[i][j].v2, -n[i][j].h1], [-n[i][j].v1, -n[i][j].v2],                              
                              ])
                     
                     # continuity: bridges extend from an island node to an island node  
@@ -75,7 +76,7 @@ def build_constraints(field, neighbours):
                     # degree: bridges built by an island must be equal to its node val
                     clauses = bridge_sum[n[i][j].val]
                     
-                    # Since the clauses carry index integers, we need to map them to their corresponding value
+                    # Since the clauses for the degree constraint carry index integers, we need to map them to their corresponding value
                     mapping = {}
                     
                     if i >= 1:

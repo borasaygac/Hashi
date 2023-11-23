@@ -1,11 +1,11 @@
 from itertools import combinations
 
-#[ n[i-1][j].v1,  n[i-1][j].v2, n[i+1][j].v1 , n[i+1][j].v2,  n[i][j-1].h1, n[i][j-1].h2, n[i][j+1].h1, n[i][j+1].h2]
+#[ n[i-1][j].v1, n[i-1][j].v2, n[i+1][j].v1, n[i+1][j].v2, n[i][j-1].h1, n[i][j-1].h2, n[i][j+1].h1, n[i][j+1].h2 ]
 
 #         |
 #    --Island--
 #         |
-# node.val = 3 => 
+
 arr = [1, 2, 3, 4, 5, 6, 7, 8]
 bridge_sum_DNF = {}
 
@@ -13,7 +13,7 @@ for r in range(0, 5):  # We're interested in lengths 1 to 4
     for comb in combinations(arr, r):
         s = set()
         subsequent_pair = False
-        count_hor = 0  # Counter for even numbers
+        count_hor = 0 
         count_ver = 0
         total = 0
         toAdd = set([-1, -2, -3, -4, -5, -6, -7, -8])
@@ -45,7 +45,6 @@ for i in range(0,9):
         print('], ', end=' ')
     print(']')
     
-    # Example dictionary of 2D arrays
 
 bridge_sum_CNF = {}
 
@@ -61,12 +60,9 @@ for key, clauses in bridge_sum_DNF.items():
 for key1 in bridge_sum_DNF.keys():
     for key2, clauses in bridge_sum_DNF.items():
         if(key1 != key2):
-            print(f"KEY!: {key1} AND KEY2: {key2}")
             if key1 not in bridge_sum_CNF:
                 bridge_sum_CNF[key1] = []
             bridge_sum_CNF[key1].extend(clauses)
-
-# Display the updated dictionary
 
 for i in range(0,9):
     print(f"bridge_sum_CNF[{i}]=[", end=' ')
@@ -76,5 +72,3 @@ for i in range(0,9):
         print('], ', end=' ')
     print(']')
     
-#node.val = 3 => bridge_sum[3] = [[],[], ]
-#node.val = 3 => -[0] and -[1] and ... except 3 and -[8] Not(DNF) And Not(DNF) == CNF

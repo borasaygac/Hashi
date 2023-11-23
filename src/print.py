@@ -43,5 +43,3 @@ def print_to_txt(n, model, num, gui):
             else:
                 file.write('  ')
                 print('  ', end=' ')
-        file.write('0')
-        print('0')

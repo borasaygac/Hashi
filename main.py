@@ -29,6 +29,7 @@ def main(gui=False, numbr=1):
         print(f"Running solver on test {num}.......")
         folder = os.path.join(os.getcwd(), 'project_1')
         file = f'{folder}/test{num}.txt'
+        
     field_info = parse_input_field(file)
     field, neighbours = initialise_field(field_info[0], field_info[1], field_info[2])
     nodes, vpool, formula = build_constraints(field, neighbours)
@@ -37,7 +38,7 @@ def main(gui=False, numbr=1):
         os.makedirs(output_folder)
     with open(f"{output_folder}/{'man_input' if gui else 'test'}{num}.cnf", 'w') as file:        
         file.write(formula.to_dimacs())
-    model = solve(vpool, formula)
+    model = solve(vpool, formula, neighbours, field_info[1])
     print_to_txt(nodes, model, num, gui)
 
 
