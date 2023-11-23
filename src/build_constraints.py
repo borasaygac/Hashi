@@ -83,7 +83,7 @@ def build_constraints(field, neighbours):
                     # degree: bridges built by an island must be equal to its node val
                     clauses = bridge_sum[n[i][j].val]
 
-                    # Since the clauses for the degree constraint carry index integers, we need to map them to their corresponding value
+                    # clauses for the degree constraint carry index integers, we need to map them to their corresponding value
                     mapping = {}
 
                     if i >= 1:
