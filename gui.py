@@ -36,11 +36,6 @@ def create_grid(x, y):
             cols.append(entry.get())
             grid[i][j] = entry
         rows.append(cols)
-    instructions_label = tk.Label(root,
-                                  text="Please make sure to only enter valid island distributions! \n"
-                                  "I.e. adjacent islands cannot exist.",
-                                  )
-    instructions_label.grid(row=x + X_OFFSET, column=0, columnspan=2, padx=1, pady=1)
     txt_button = tk.Button(root,
                            text="Save values and create grid.",
                            command=lambda: save_x_y_to_txt())
@@ -189,16 +184,11 @@ confirm_button = tk.Button(root, text="Confirm",
                            command=save_values,
                            padx=2, pady=2)
 
-random_gen_button = tk.Button(root, text="Generate Random Puzzle",
-                              padx=2, pady=2)
-
 
 label_x.grid(row=0, column=0, rowspan=2, columnspan=1)
 entry_x.grid(row=0, column=1, rowspan=2, columnspan=1)
 label_y.grid(row=4, column=0, rowspan=2, columnspan=1)
 entry_y.grid(row=4, column=1, rowspan=2, columnspan=1)
 confirm_button.grid(row=0, column=2, columnspan=1, padx=2, pady=2, rowspan=2)
-random_gen_button.grid(row=4, column=2, columnspan=1,
-                       rowspan=2, padx=2, pady=2)
 
 root.mainloop()
