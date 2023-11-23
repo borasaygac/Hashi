@@ -1,4 +1,3 @@
-import copy
 import random
 import tkinter as tk
 from tkinter import messagebox
@@ -11,6 +10,7 @@ input_no = 1
 rows = []
 cols = []
 entry_grid = []
+X_OFFSET = 40
 
 
 def save_values():
@@ -31,7 +31,7 @@ def create_grid(x, y):
     for i in range(0, x):
         for j in range(0, y):
             entry = tk.Entry(root)
-            entry.grid(row=i + 10, column=j)
+            entry.grid(row=i + 15, column=j)
             entry.insert(tk.END, '.')
             cols.append(entry.get())
             grid[i][j] = entry
@@ -40,11 +40,11 @@ def create_grid(x, y):
                                   text="Please make sure to only enter valid island distributions! \n"
                                   "I.e. adjacent islands cannot exist.",
                                   )
-    instructions_label.grid(row=x + 30, column=4, columnspan=2, padx=1, pady=1)
+    instructions_label.grid(row=x + X_OFFSET, column=0, columnspan=2, padx=1, pady=1)
     txt_button = tk.Button(root,
                            text="Save values and create grid.",
                            command=lambda: save_x_y_to_txt())
-    txt_button.grid(row=x+30, column=0, columnspan=2, rowspan=1)
+    txt_button.grid(row=x+X_OFFSET*2, column=0, columnspan=2, rowspan=1)
     entry_grid = grid
     return grid
 
@@ -76,7 +76,7 @@ def save_x_y_to_txt():
     run_button = tk.Button(root,
                            text="Run Solver!",
                            command=run_solver)
-    run_button.grid(row=x + 16, column=0, columnspan=2, rowspan=1)
+    run_button.grid(row=x + X_OFFSET*3, column=0, columnspan=2, rowspan=1)
 
 
 def run_solver():
@@ -88,13 +88,13 @@ def run_solver():
     start_again_button = tk.Button(root,
                                    text="Start over?",
                                    command=clear)
-    start_again_button.grid(row=int(entry_x.get())+12,
+    start_again_button.grid(row=int(entry_x.get())+X_OFFSET*4,
                             column=0, columnspan=2, rowspan=1)
     input_no += 1
 
 
 def clear():
-    for i in range(10, int(entry_x.get())+40):
+    for i in range(15, int(entry_x.get())+X_OFFSET*5):
         todeletelist = root.grid_slaves(row=i)
         for elem in todeletelist:
             elem.destroy()
@@ -181,26 +181,26 @@ root.geometry(
 root.grid_rowconfigure(0, weight=0)
 root.grid_columnconfigure(0, weight=0)
 
-label_x = tk.Label(root, text="X Value")
-entry_x = tk.Entry(root)
-label_y = tk.Label(root, text="Y Value")
-entry_y = tk.Entry(root)
+label_x = tk.Label(root, text="X Value", width=15)
+entry_x = tk.Entry(root, width= 15)
+label_y = tk.Label(root, text="Y Value", width=15)
+entry_y = tk.Entry(root, width= 15)
 
 confirm_button = tk.Button(root, text="Confirm",
                            command=save_values,
                            padx=2, pady=2)
 
-random_gen_button = tk.Button(root, text="Generate Puzzle",
+random_gen_button = tk.Button(root, text="Generate Random Puzzle",
                               command=generate_puzzle,
                               padx=2, pady=2)
 
 
-label_x.grid(row=0, column=0, rowspan=4, columnspan=2)
-entry_x.grid(row=0, column=5, rowspan=2)
-label_y.grid(row=4, column=0, rowspan=4, columnspan=2)
-entry_y.grid(row=4, column=5, rowspan=2, columnspan=2)
-confirm_button.grid(row=9, column=5, columnspan=4)
-random_gen_button.grid(row=0, column=9, columnspan=4,
+label_x.grid(row=0, column=0, rowspan=2, columnspan=1)
+entry_x.grid(row=0, column=1, rowspan=2, columnspan=1)
+label_y.grid(row=4, column=0, rowspan=2, columnspan=1)
+entry_y.grid(row=4, column=1, rowspan=2, columnspan=1)
+confirm_button.grid(row=0, column=2, columnspan=1, padx=2, pady=2, rowspan=2)
+random_gen_button.grid(row=4, column=2, columnspan=1,
                        rowspan=2, padx=2, pady=2)
 
 root.mainloop()
