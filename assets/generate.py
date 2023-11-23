@@ -25,7 +25,7 @@ for r in range(0, 5):  # We're interested in lengths 1 to 4
             toAdd.add(num)
             toAdd.remove(-num)
 
-        # prevent subsequent pairs and more than 3 bridges built along the same axis
+        # prevent invalid combinations of 2, 3 or 4 truthy variables
         if (count_hor > 2) | (count_ver > 2) | (subsequent_pair):
             continue
 
