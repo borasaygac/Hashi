@@ -2,7 +2,7 @@
 
 ## Instructions
 
-You can start the raw solver without the gui from terminal with `python main.py` on root level. By default, it will solve the first test file, you can customise the input by providing the number of the test file, i.e. `python main.py 8`. The GUI can be started with `python gui.py`. Please note that the generation of puzzles was noot implemented fully, a possible recursive algorithm can be found as comment in `gui.py` and clicking on the generate button will fail the application
+You can start the raw solver without the gui from terminal with `python main.py` on root level. By default, it will solve the first test file, you can customise the input by providing the number of the test file, i.e. `python main.py 8`. The GUI can be started with `python gui.py`. Please note that the generation of puzzles was noot implemented fully, a possible recursive algorithm can be found as comment in `gui.py`.
 
 ## Optimisation
 

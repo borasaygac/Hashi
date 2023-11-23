@@ -100,8 +100,8 @@ def clear():
             elem.destroy()
 
 
-def generate_puzzle():
-    return
+# def generate_puzzle():
+#     return
     # random_x_size = randint(3, 15)
     # random_y_size = randint(3, 15)
     # random_array = [[-1 for y in range(random_y_size + 2)]
@@ -191,7 +191,6 @@ confirm_button = tk.Button(root, text="Confirm",
                            padx=2, pady=2)
 
 random_gen_button = tk.Button(root, text="Generate Random Puzzle",
-                              command=generate_puzzle,
                               padx=2, pady=2)
 
 
