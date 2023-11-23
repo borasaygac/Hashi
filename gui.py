@@ -36,6 +36,11 @@ def create_grid(x, y):
             cols.append(entry.get())
             grid[i][j] = entry
         rows.append(cols)
+    instructions_label = tk.Label(root,
+                                  text="Please make sure to only enter valid island distributions! \n"
+                                  "I.e. adjacent islands cannot exist.",
+                                  )
+    instructions_label.grid(row=x + 30, column=4, columnspan=2, padx=1, pady=1)
     txt_button = tk.Button(root,
                            text="Save values and create grid.",
                            command=lambda: save_x_y_to_txt())
@@ -164,6 +169,39 @@ def generate_puzzle():
     # for i in range(0, len(random_array)):
     #     print(f'{random_array[i]}\n')
     # print(rand_island)
+
+    # def build(x, y, grid, bridge, prev_dir):
+    #     if x > len(grid) - 1 or y > len(grid) - 1 or x < 1 or y < 1:
+    #         return
+    #     if grid[x][y] == 9 or grid[x][y] == 10:
+    #         return
+    #     if grid[x][y] != 0:
+    #         if val == -1:
+    #             x -= dir[prev_dir][0]
+    #             y -= dir[prev_dir][1]
+    #             grid[x][y] -= bridge
+    #         rand = randint(0, 3)
+    #         grid[x][y] += bridge % 4
+    #         val_tmp = build(x + dir[rand][0], y + dir[rand]
+    #                         [1], grid, randint(9, 10), dir[rand])
+    #         val_tmp = val
+    #         return -1
+    #     action = randint(1, 2)  # 1 == build 2 == cont
+    #     if action == 1:
+    #         rand = randint(0, 3)
+    #         # Potential while here
+    #         build(x + dir[rand][0], y + dir[rand][1],
+    #               grid, randint(9, 10), dir[rand])
+    #     else:
+    #         grid[x][y] = bridge
+    #         build(x + prev_dir[0], y + prev_dir[1], grid, bridge, prev_dir)
+    #         grid[x][y] = 0
+    #
+    # first_random_dir = randint(0, 3)
+    # build(x + dir[first_random_dir][0], y + dir[first_random_dir][1],
+    #       random_array, randint(9, 10), dir[first_random_dir])
+
+
 
 
 root = tk.Tk()
