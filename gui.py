@@ -1,7 +1,6 @@
 import random
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import font
 import os
 import main
 from random import randint
@@ -31,23 +30,22 @@ def create_grid(x, y):
     grid = [[None for _ in range(y)] for _ in range(x)]
     for i in range(0, x):
         for j in range(0, y):
-            entry = tk.Entry(root)
-            entry.grid(row=i + 6, column=j,sticky="NSEW")
+            entry = tk.Entry(root, width=10)
+            entry.grid(row=i + 15, column=j)
             entry.insert(tk.END, '.')
             cols.append(entry.get())
             grid[i][j] = entry
         rows.append(cols)
-    instructions_label = tk.Label(root,
-                                  text="Please make sure to only enter valid island distributions! \n"
-                                  "I.e. adjacent islands cannot exist.")
-    instructions_label.grid(row=x + X_OFFSET, column=0, columnspan=3, padx=1, pady=1,sticky="NSEW")
-
     txt_button = tk.Button(root,
-                           text="Save values and create grid.",
+                           text="Save grid.",
                            command=lambda: save_x_y_to_txt())
-    txt_button.grid(row=x+X_OFFSET*2, column=0, columnspan=2, rowspan=1, sticky="NSEW")
+    txt_button.grid(row=x+X_OFFSET*2, column=0, columnspan=2, rowspan=1)
     entry_grid = grid
-    root.pack_slaves()
+    if len(rows)*16 >= int(width) or len(cols)*16 >= int(height):
+        if int(width) + len(rows)*20 >= root.winfo_screenwidth() or int(height) + len(cols)*20 >= root.winfo_screenheight():
+            root.geometry(f'{root.winfo_screenwidth()}x{root.winfo_screenheight()}')
+        else:
+            root.geometry(f'{int(width) + len(rows)*20}x{int(height)+ len(cols)*20}')
     return grid
 
 
@@ -78,8 +76,7 @@ def save_x_y_to_txt():
     run_button = tk.Button(root,
                            text="Run Solver!",
                            command=run_solver)
-    run_button.grid(row=x + X_OFFSET*3, column=0, columnspan=2, rowspan=1, sticky="NSEW")
-    root.pack_slaves()
+    run_button.grid(row=x + X_OFFSET*3, column=0, columnspan=2, rowspan=1)
 
 
 def run_solver():
@@ -92,9 +89,8 @@ def run_solver():
                                    text="Start over?",
                                    command=clear)
     start_again_button.grid(row=int(entry_x.get())+X_OFFSET*4,
-                            column=0, columnspan=2, rowspan=1, sticky="NSEW")
+                            column=0, columnspan=2, rowspan=1)
     input_no += 1
-    root.pack_slaves()
 
 
 def clear():
@@ -176,35 +172,27 @@ def clear():
 root = tk.Tk()
 root.title("Group K")
 width = root.winfo_screenwidth() / 2
-height = root.winfo_screenheight() / 4
+height = root.winfo_screenheight() / 2
 screenquarterheight = height / 2
-root.geometry(
-    f'{int(width)}x{int(height)}+{int(width)}+{int(screenquarterheight)}')
-root.columnconfigure(0, weight=1)
-root.rowconfigure(6, weight=1)
-default_font = font.nametofont("TkDefaultFont")
-default_font.config(family="Arial",
-                    size=10)
+# Make it fullscreen with the os menu attached.
+root.geometry(f'{200}x{150}+{root.winfo_width()}+{root.winfo_height()}')
+root.grid_rowconfigure(0, weight=0)
+root.grid_columnconfigure(0, weight=0)
 
-label_x = tk.Label(root, text="X Value")
-entry_x = tk.Entry(root)
-label_y = tk.Label(root, text="Y Value")
-entry_y = tk.Entry(root)
+label_x = tk.Label(root, text="X Value", width=8)
+entry_x = tk.Entry(root, width=8)
+label_y = tk.Label(root, text="Y Value", width=8)
+entry_y = tk.Entry(root, width=8)
 
 confirm_button = tk.Button(root, text="Confirm",
                            command=save_values,
-                           padx=2, pady=2, )
-
-random_gen_button = tk.Button(root, text="Generate Random Puzzle",
-                              padx=2, pady=2)
+                           padx=2, pady=2)
 
 
-label_x.grid(row=0, column=0, rowspan=2, columnspan=1, sticky="NSEW")
-entry_x.grid(row=0, column=1, rowspan=2, columnspan=1, sticky="NSEW")
-label_y.grid(row=4, column=0, rowspan=2, columnspan=1, sticky="NSEW")
-entry_y.grid(row=4, column=1, rowspan=2, columnspan=1, sticky="NSEW")
-confirm_button.grid(row=0, column=3, columnspan=2, padx=1, pady=1, rowspan=1)
-random_gen_button.grid(row=4, column=3, columnspan=2,
-                       rowspan=1, padx=1, pady=1)
-root.pack_slaves()
+label_x.grid(row=0, column=0, rowspan=2, columnspan=1)
+entry_x.grid(row=0, column=1, rowspan=2, columnspan=1)
+label_y.grid(row=4, column=0, rowspan=2, columnspan=1)
+entry_y.grid(row=4, column=1, rowspan=2, columnspan=1)
+confirm_button.grid(row=0, column=2, columnspan=1, padx=2, pady=2, rowspan=2)
+
 root.mainloop()
